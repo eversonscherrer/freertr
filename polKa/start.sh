@@ -1,7 +1,7 @@
 #!/bin/bash
 
 export FREERTR=/rtr
-export POLKA=$HOME/polKa
+export POLKA=$HOME/freertr/polKa
 
 tmux new-session -d -s rare 'java -jar $FREERTR/rtr.jar routersc $POLKA/ams0001-hw.txt $POLKA/ams0001-sw.txt' 
 tmux split-window -v -t 0 -p 50 
