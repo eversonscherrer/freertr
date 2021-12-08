@@ -12,8 +12,8 @@ no global routing table: every routed interface must be in a virtual routing tab
 In order to be able to start a topology with PolKa. 
 
 # Article objective
-This article exposes how to install:
-- tmux
+This article exposes how to install freerouter and execute a core topology with PolKA.
+
 - Operating system supported:
   - Debian 10 (stable aka buster)
   - Ubuntu 18.04 (Bionic beaver)
@@ -41,17 +41,19 @@ Or download our image:
 
 3. Install tmux and git:
 ``` console
-apt install tmux git -y
+apt install tmux -y
+apt install git -y
 ```
 
 4. Clone repository:
 ``` console
-cd 
+cd ~
 git clone git@github.com:eversonscherrer/freertr.git
 ```
 
 5. Set permission exec start/stop topology
 ``` console
+cd freertr/polKa
 chmod +x start.sh
 chmod +x stop.sh
 ```
@@ -187,6 +189,10 @@ In this article you:
 - you learned how to set up a PolKA environment deployment 
 
 # References
+
+https://ieeexplore.ieee.org/document/9165501
+
+https://chalk-thought-7ce.notion.site/PolKA-Project-7452bbe9bd294a9b88791ba9650a7069
 
 https://wiki.geant.org/
 
