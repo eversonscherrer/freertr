@@ -31,7 +31,7 @@ To run the topology `./start.sh` To stop the topology `./stop.sh`.
 wget freertr.net/install.sh ; sudo bash install.sh
 ```
 
-3.  
+3.  Install tmux
 
 
 # Verification
