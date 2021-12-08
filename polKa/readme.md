@@ -29,7 +29,7 @@ This article exposes how to install:
   http://archive.ubuntu.com/ubuntu/dists/bionic/main/installer-amd64/current/images/netboot/mini.iso
   ```
   - Install freeRouter
-  ``` zsh
+  ``` console
   wget freertr.net/install.sh ; sudo bash install.sh
   ```
 Or download our image:
@@ -40,18 +40,18 @@ Or download our image:
 2. Start & connect your VM as root.  
 
 3. Install tmux and git:
-``` zsh
+``` console
 apt install tmux git -y
 ```
 
 4. Clone repository:
-```
+``` console
 cd 
 git clone git@github.com:eversonscherrer/freertr.git
 ```
 
 5. Set permission exec start/stop topology
-```
+``` console
 chmod +x start.sh
 chmod +x stop.sh
 ```
@@ -102,6 +102,14 @@ Escape character is '^]'.
 welcome
 line ready
 POZ0001#
+```
+
+2. Check running-config for tunnel's polka in AMS0001 and FRA0001
+``` console
+```
+
+3. Connectivity test tunnel polka between AMS0001 and FRA0001
+``` console
 ```
 
 # Conclusion
