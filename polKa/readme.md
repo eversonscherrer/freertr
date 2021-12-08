@@ -37,15 +37,9 @@ Or download our image:
   ```
   https://drive.google.com/file/d/1tOLUS3VdMrvoLfts85mWcuk2IRK49yQ5/view?usp=sharing
   ```
-2. Install tmux:
+2. Install tmux and git:
 ``` zsh
-apt install tmux
-```
-
-3. Install Git:
-
-```
-apt install git
+apt install tmux git -y
 ```
 
 3. Clone repository:
