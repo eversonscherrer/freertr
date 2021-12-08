@@ -23,8 +23,10 @@ This article exposes how to install:
 ![rare-topology](https://user-images.githubusercontent.com/56919528/145196623-cc872b6d-7c48-4d83-9410-e6f2e1e23836.jpeg)
 
 # Cookbook
-1. Install you Favorite Operation System
-In our example we will use the ubuntu 20.04 installed as a VirtualBox VM
+1. Install you Favorite Operation System. In our example we will use the Ubuntu 20.04 installed as a VirtualBox VM:
+```
+https://drive.google.com/file/d/1tOLUS3VdMrvoLfts85mWcuk2IRK49yQ5/view?usp=sharing
+```
 
 2. Install freeRouter
 ```zsh
