@@ -39,3 +39,7 @@ wget freertr.net/install.sh ; sudo bash install.sh
 # Discussion
 
 # Conclusion
+In this 2nd article you:
+- had a showcase on how to implement a fully disaggregated RARE/freeRtr
+- even if the control plane and the interface can be run almost anywhere, the dataplane still needs to be specific and adapted to the use case you planned to deploy
+- pcapInt tool is a nitty gritty tool used to bind existing ports to a UDP socket tunnel.
