@@ -58,7 +58,8 @@ chmod +x stop.sh
 To run the topology `./start.sh` To stop the topology `./stop.sh`.
 
 # Verification
-1 . AMS0001 telnet access from Virtualbox VM guest via port 2121
+1. Check telnet access for AMS0001@2121, FRA0001@2222, BUD0001@2323 and POZ@2424:
+AMS0001 telnet access from Virtualbox VM guest via port 2121
 
 
 # Conclusion
