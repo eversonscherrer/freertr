@@ -1,9 +1,9 @@
-Requirement
+# Requirement
 Basic Linux/Unix knowledge
 Service provider networking knowledge
 
 
-Overview
+# Overview
 In order to be able to start a topology with PolKa(melhorar). 
 
 Article objective
@@ -23,9 +23,9 @@ Diagram:
 1 - Install you Favorite Operation System
 In our example we will use the ubuntu 20.04 installed as a VirtualBox VM
 
-
+```
 apt install tmux
-
 chmod +x start.sh chmod +x stop.sh
+```
 
-To run the topology ./start.sh To stop the topology ./stop.sh
+To run the topology `./start.sh` To stop the topology `./stop.sh`.
