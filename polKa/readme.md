@@ -65,6 +65,9 @@ chmod +x start.sh
 chmod +x stop.sh
 ```
 To run the topology `./start.sh` To stop the topology `./stop.sh`.
+``` console
+./start.sh
+```
 
 # Verification
 1. Check telnet access for AMS0001@2121, FRA0001@2222, BUD0001@2323 and POZ0001@2424:
