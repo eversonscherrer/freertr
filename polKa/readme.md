@@ -23,8 +23,8 @@ This article exposes how to install:
 ![rare-topology](https://user-images.githubusercontent.com/56919528/145196623-cc872b6d-7c48-4d83-9410-e6f2e1e23836.jpeg)
 
 # Cookbook
-1. Install you favorite operation system or use our virtualbox image.
-  - Install your OS, like Ubuntu 18.04 MinimalCD 64-bit PC (amd64, x86_64):
+1. Install you favorite operation system or use our virtualbox image:
+  - Install your OS, like Ubuntu 18.04 MinimalCD 64-bit PC (amd64, x86_64) 64MB:
   ```
   http://archive.ubuntu.com/ubuntu/dists/bionic/main/installer-amd64/current/images/netboot/mini.iso
   ```
