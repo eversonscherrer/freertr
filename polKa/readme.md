@@ -20,19 +20,22 @@ This article exposes how to install:
 # Cookbook
 1. Install you Favorite Operation System
 In our example we will use the ubuntu 20.04 installed as a VirtualBox VM
-```
-apt install tmux
-chmod +x start.sh chmod +x stop.sh
-```
-To run the topology `./start.sh` To stop the topology `./stop.sh`.
 
 2. Install freeRouter
-```
+```zsh
 wget freertr.net/install.sh ; sudo bash install.sh
 ```
 
-3.  Install tmux
+3. Install tmux
+```zsh
+apt install tmux
+```
 
+4. Make run start/stop topology
+```
+chmod +x start.sh chmod +x stop.sh
+```
+To run the topology `./start.sh` To stop the topology `./stop.sh`.
 
 # Verification
 
