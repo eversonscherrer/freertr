@@ -48,7 +48,7 @@ cd
 git clone git@github.com:eversonscherrer/freertr.git
 ```
 
-4. Make run start/stop topology
+4. Set permission exec start/stop topology
 ```
 chmod +x start.sh
 chmod +x stop.sh
