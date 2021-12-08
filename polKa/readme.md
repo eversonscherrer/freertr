@@ -130,7 +130,7 @@ interface tunnel1
 AMS0001#show interfaces summary | include tunnel1
 ```
 
-``` console
+```
 tunnel1    up     0      0      0
 ```
 
@@ -158,7 +158,7 @@ interface tunnel1
 FRA0001#show interfaces summary | include tunnel1
 ```
 
-``` console
+```
 tunnel1    up     0      0      0
 ```
 
@@ -166,7 +166,7 @@ tunnel1    up     0      0      0
 ``` console
 AMS0001#ping 30.30.30.2 /vrf v1
 ```
-``` console
+``` 
 pinging 30.30.30.2, src=null, vrf=v1, cnt=5, len=64, tim=1000, gap=0, ttl=255, tos=0, flow=0, fill=0, sweep=false, multi=false, detail=false
 !!!!!
 result=100%, recv/sent/lost/err=5/5/0/0, rtt min/avg/max/total=1/1/2/7
@@ -176,7 +176,7 @@ result=100%, recv/sent/lost/err=5/5/0/0, rtt min/avg/max/total=1/1/2/7
 ``` console
 AMS0001#ping 30.30.30.1 /vrf v1
 ```
-``` console
+```
 pinging 30.30.30.1, src=null, vrf=v1, cnt=5, len=64, tim=1000, gap=0, ttl=255, tos=0, flow=0, fill=0, sweep=false, multi=false, detail=false
 !!!!!
 result=100%, recv/sent/lost/err=5/5/0/0, rtt min/avg/max/total=1/1/2/7
