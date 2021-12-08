@@ -37,14 +37,27 @@ Or download our image:
   ```
   https://drive.google.com/file/d/1tOLUS3VdMrvoLfts85mWcuk2IRK49yQ5/view?usp=sharing
   ```
-3. Install tmux
+2. Install tmux:
 ``` zsh
 apt install tmux
 ```
 
+3. Install Git:
+
+```
+apt install git
+```
+
+3. Clone repository:
+```
+cd 
+git clone git@github.com:eversonscherrer/freertr.git
+```
+
 4. Make run start/stop topology
 ```
-chmod +x start.sh chmod +x stop.sh
+chmod +x start.sh
+chmod +x stop.sh
 ```
 To run the topology `./start.sh` To stop the topology `./stop.sh`.
 
