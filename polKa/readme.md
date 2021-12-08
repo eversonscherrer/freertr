@@ -104,7 +104,7 @@ line ready
 POZ0001#
 ```
 
-2. Check running-config for tunnel's polka in AMS0001 and FRA0001
+2. Check running-config for tunnel polka in AMS0001 to FRA0001
 ``` console
 AMS0001#show running-config interface tunnel1
 ```
@@ -132,12 +132,61 @@ AMS0001#show interfaces summary | include tunnel1
 tunnel1    up     0      0      0
 ```
 
-3. Connectivity test tunnel polka between AMS0001 and FRA0001
+3. Check running-config for tunnel polka in FRA0001 to AMS0001
 ``` console
+FRA0001#show running-config interface tunnel1
+```
+```
+interface tunnel1
+ description POLKA tunnel from FRA0001[3] -> AMS0001[3]
+ tunnel vrf v1
+ tunnel source loopback0
+ tunnel destination 20.20.20.1
+ tunnel domain-name 20.20.20.3 20.20.20.4
+ tunnel mode polka
+ vrf forwarding v1
+ ipv4 address 30.30.30.2 255.255.255.252
+ no shutdown
+ no log-link-change
+ exit
+!
 ```
 
+``` console
+FRA0001#show interfaces summary | include tunnel1
+```
+
+``` console
+tunnel1    up     0      0      0
+```
+
+4. Connectivity test tunnel polka between AMS0001 to FRA0001
+``` console
+AMS0001#ping 30.30.30.2 /vrf v1
+```
+``` console
+pinging 30.30.30.2, src=null, vrf=v1, cnt=5, len=64, tim=1000, gap=0, ttl=255, tos=0, flow=0, fill=0, sweep=false, multi=false, detail=false
+!!!!!
+result=100%, recv/sent/lost/err=5/5/0/0, rtt min/avg/max/total=1/1/2/7
+```
+
+4. Connectivity test tunnel polka between  FRA0001 to AMS0001
+``` console
+AMS0001#ping 30.30.30.1 /vrf v1
+```
+``` console
+pinging 30.30.30.1, src=null, vrf=v1, cnt=5, len=64, tim=1000, gap=0, ttl=255, tos=0, flow=0, fill=0, sweep=false, multi=false, detail=false
+!!!!!
+result=100%, recv/sent/lost/err=5/5/0/0, rtt min/avg/max/total=1/1/2/7
+```
+
+
 # Conclusion
-In this 2nd article you:
+In this article you:
 - had a showcase on how to implement a fully disaggregated RARE/freeRtr
-- even if the control plane and the interface can be run almost anywhere, the dataplane still needs to be specific and adapted to the use case you planned to deploy
-- pcapInt tool is a nitty gritty tool used to bind existing ports to a UDP socket tunnel.
+- you learned how to set up a PolKA environment deployment 
+
+# References
+
+https://wiki.geant.org/
+http://www.freertr.net/
