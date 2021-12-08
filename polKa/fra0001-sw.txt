@@ -1,0 +1,126 @@
+hostname FRA0001
+no buggy
+!
+!
+vrf definition v1
+ rd 1:1
+ exit
+!
+router ospf4 1
+ vrf v1
+ router-id 10.2.2.2
+ traffeng-id 0.0.0.0
+ segrout 10
+ area 0 enable
+ area 0 segrout
+ redistribute connected
+ exit
+!
+interface loopback0
+ no description
+ vrf forwarding v1
+ ipv4 address 20.20.20.2 255.255.255.255
+ router ospf4 1 enable
+ router ospf4 1 area 0
+ router ospf4 1 segrout index 2
+ router ospf4 1 segrout node
+ no shutdown
+ no log-link-change
+ exit
+!
+interface ethernet1
+ no description
+ lldp enable
+ vrf forwarding v1
+ ipv4 address 7.7.7.2 255.255.255.252
+ router ospf4 1 enable
+ router ospf4 1 area 0
+ no shutdown
+ no log-link-change
+ exit
+!
+interface ethernet2
+ no description
+ lldp enable
+ vrf forwarding v1
+ ipv4 address 6.6.6.1 255.255.255.252
+ polka enable 2 65536 10
+ router ospf4 1 enable
+ router ospf4 1 area 0
+ no shutdown
+ no log-link-change
+ exit
+!
+interface ethernet3
+ no description
+ lldp enable
+ vrf forwarding v1
+ ipv4 address 2.2.2.1 255.255.255.252
+ polka enable 2 65536 10
+ router ospf4 1 enable
+ router ospf4 1 area 0
+ no shutdown
+ no log-link-change
+ exit
+!
+interface ethernet4
+ no description
+ lldp enable
+ vrf forwarding v1
+ ipv4 address 8.8.8.1 255.255.255.252
+ router ospf4 1 enable
+ router ospf4 1 area 0
+ no shutdown
+ no log-link-change
+ exit
+!
+interface ethernet5
+ no description
+ lldp enable
+ vrf forwarding v1
+ ipv4 address 8.8.8.1 255.255.255.252
+ router ospf4 1 enable
+ router ospf4 1 area 0
+ no shutdown
+ no log-link-change
+ exit
+!
+interface tunnel1
+ description POLKA tunnel from FRA0001[3] -> AMS0001[3]
+ tunnel vrf v1
+ tunnel source loopback0
+ tunnel destination 20.20.20.1
+ tunnel domain-name 20.20.20.4 20.20.20.3
+ tunnel mode polka
+ vrf forwarding v1
+ ipv4 address 30.30.30.2 255.255.255.252
+ no shutdown
+ no log-link-change
+ exit
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+server telnet tel
+ security protocol telnet
+ exec timeout 10000000
+ exec colorized
+ exec logging
+ no exec authorization
+ no login authentication
+ login logging
+ vrf v1
+ exit
+!
+!
+end
