@@ -6,18 +6,15 @@ Service provider networking knowledge
 # Overview
 In order to be able to start a topology with PolKa(melhorar). 
 
-Article objective
+# Article objective
 This article exposes how to install:
+- tmux
+- Operating system supported:
+  - Debian 10 (stable aka buster)
+  - Ubuntu 18.04 (Bionic beaver)
+  - Ubuntu 20.04 (Focal fossa)
 
-tmux
-
-Operating system supported
-
-Debian 10 (stable aka buster)
-Ubuntu 18.04 (Bionic beaver)
-Ubuntu 20.04 (Focal fossa)
-
-Diagram: 
+# Diagram 
 ![rare-topology](https://user-images.githubusercontent.com/56919528/145196623-cc872b6d-7c48-4d83-9410-e6f2e1e23836.jpeg)
 
 1 - Install you Favorite Operation System
