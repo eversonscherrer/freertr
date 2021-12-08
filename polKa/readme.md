@@ -124,6 +124,13 @@ interface tunnel1
 !
 ```
 
+``` console
+AMS0001#show interfaces summary | include tunnel1
+```
+
+``` console
+tunnel1    up     0      0      0
+```
 
 3. Connectivity test tunnel polka between AMS0001 and FRA0001
 ``` console
