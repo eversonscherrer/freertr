@@ -23,18 +23,22 @@ This article exposes how to install:
 ![rare-topology](https://user-images.githubusercontent.com/56919528/145196623-cc872b6d-7c48-4d83-9410-e6f2e1e23836.jpeg)
 
 # Cookbook
-1. Install you Favorite Operation System. In our example we will use the Ubuntu 20.04 installed as a VirtualBox VM:
-```
-https://drive.google.com/file/d/1tOLUS3VdMrvoLfts85mWcuk2IRK49yQ5/view?usp=sharing
-```
-
-2. Install freeRouter
-```zsh
-wget freertr.net/install.sh ; sudo bash install.sh
-```
-
+1. Install you favorite operation system or use our virtualbox image.
+  - Install your OS, like Ubuntu 18.04 MinimalCD 64-bit PC (amd64, x86_64):
+  ```
+  http://archive.ubuntu.com/ubuntu/dists/bionic/main/installer-amd64/current/images/netboot/mini.iso
+  ```
+  - Install freeRouter
+  ``` zsh
+  wget freertr.net/install.sh ; sudo bash install.sh
+  ```
+Or download our image:
+  - In our example we will use the Ubuntu 20.04 installed as a VirtualBox VM:
+  ```
+  https://drive.google.com/file/d/1tOLUS3VdMrvoLfts85mWcuk2IRK49yQ5/view?usp=sharing
+  ```
 3. Install tmux
-```zsh
+``` zsh
 apt install tmux
 ```
 
