@@ -106,7 +106,24 @@ POZ0001#
 
 2. Check running-config for tunnel's polka in AMS0001 and FRA0001
 ``` console
+AMS0001#show running-config interface tunnel1
 ```
+```
+interface tunnel1
+ description POLKA tunnel from AMS0001[3] -> FRA0001[3]
+ tunnel vrf v1
+ tunnel source loopback0
+ tunnel destination 20.20.20.2
+ tunnel domain-name 20.20.20.4 20.20.20.3
+ tunnel mode polka
+ vrf forwarding v1
+ ipv4 address 30.30.30.1 255.255.255.252
+ no shutdown
+ no log-link-change
+ exit
+!
+```
+
 
 3. Connectivity test tunnel polka between AMS0001 and FRA0001
 ``` console
