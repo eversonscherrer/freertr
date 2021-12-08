@@ -33,10 +33,18 @@ This article exposes how to install freerouter and execute a core topology with 
   ```
 Or download our image:
   - In our example we will use the Ubuntu 20.04 installed as a VirtualBox VM:
+
+  ![print VB](https://user-images.githubusercontent.com/56919528/145298486-9fe68011-3c7b-4eec-9680-91a8391b350d.png)
+
   ```
   https://drive.google.com/file/d/1tOLUS3VdMrvoLfts85mWcuk2IRK49yQ5/view?usp=sharing
   ```
 2. Start & connect your VM as root.  
+``` console
+User: freertr
+password: rtr
+sudo -i
+```
 
 3. Install tmux and git:
 ``` console
