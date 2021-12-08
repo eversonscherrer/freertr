@@ -83,7 +83,7 @@ FRA0001#
 ```
 
 BUD0001 telnet access from Virtualbox VM guest via port 2323
-```
+``` console
 # telnet 127.0.0.1 2323
 Trying 127.0.0.1...
 Connected to 127.0.0.1.
@@ -94,7 +94,7 @@ BUD0001#
 ```
 
 POZ0001 telnet access from Virtualbox VM guest via port 2424
-```
+``` console
 # telnet 127.0.0.1 2424
 Trying 127.0.0.1...
 Connected to 127.0.0.1.
