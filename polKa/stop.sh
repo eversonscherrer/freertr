@@ -1,3 +1,3 @@
 #!/bin/bash
 
-tmux kill-window -t polka
+tmux kill-window -t rare

@@ -10,7 +10,7 @@ router ospf4 1
  vrf v1
  router-id 10.2.2.2
  traffeng-id 0.0.0.0
- segrout 10
+ segrout 100
  area 0 enable
  area 0 segrout
  redistribute connected
@@ -33,6 +33,7 @@ interface ethernet1
  lldp enable
  vrf forwarding v1
  ipv4 address 7.7.7.2 255.255.255.252
+ polka enable 2 65536 20
  router ospf4 1 enable
  router ospf4 1 area 0
  no shutdown
@@ -44,7 +45,7 @@ interface ethernet2
  lldp enable
  vrf forwarding v1
  ipv4 address 6.6.6.1 255.255.255.252
- polka enable 2 65536 10
+ polka enable 2 65536 20
  router ospf4 1 enable
  router ospf4 1 area 0
  no shutdown
@@ -56,7 +57,7 @@ interface ethernet3
  lldp enable
  vrf forwarding v1
  ipv4 address 2.2.2.1 255.255.255.252
- polka enable 2 65536 10
+ polka enable 2 65536 20
  router ospf4 1 enable
  router ospf4 1 area 0
  no shutdown
@@ -81,19 +82,6 @@ interface ethernet5
  ipv4 address 8.8.8.1 255.255.255.252
  router ospf4 1 enable
  router ospf4 1 area 0
- no shutdown
- no log-link-change
- exit
-!
-interface tunnel1
- description POLKA tunnel from FRA0001[3] -> AMS0001[3]
- tunnel vrf v1
- tunnel source loopback0
- tunnel destination 20.20.20.1
- tunnel domain-name 20.20.20.4 20.20.20.3
- tunnel mode polka
- vrf forwarding v1
- ipv4 address 30.30.30.2 255.255.255.252
  no shutdown
  no log-link-change
  exit
