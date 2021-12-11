@@ -116,17 +116,17 @@ line ready
 POZ0001#
 ```
 
-2. Check running-config for tunnel polka in AMS0001 to FRA0001
+2. Check running-config for tunnel polka in RIO0001 to GVA0001
 ``` console
-AMS0001#show running-config interface tunnel1
+RIO0001#show running-config interface tunnel1
 ```
 ```
 interface tunnel1
- description POLKA tunnel from AMS0001[3] -> FRA0001[3]
+ description POLKA tunnel from RIO0001 -> GVA0001
  tunnel vrf v1
  tunnel source loopback0
- tunnel destination 20.20.20.2
- tunnel domain-name 20.20.20.4 20.20.20.3
+ tunnel destination 20.20.20.7
+ tunnel domain-name 20.20.20.1 20.20.20.2
  tunnel mode polka
  vrf forwarding v1
  ipv4 address 30.30.30.1 255.255.255.252
@@ -137,24 +137,24 @@ interface tunnel1
 ```
 
 ``` console
-AMS0001#show interfaces summary | include tunnel1
+RIO0001#show interfaces summary | include tunnel1
 ```
 
 ```
 tunnel1    up     0      0      0
 ```
 
-3. Check running-config for tunnel polka in FRA0001 to AMS0001
+3. Check running-config for tunnel polka in GVA0001 to RIO0001
 ``` console
-FRA0001#show running-config interface tunnel1
+GVA0001#show running-config interface tunnel1
 ```
 ```
 interface tunnel1
- description POLKA tunnel from FRA0001[3] -> AMS0001[3]
+ description POLKA tunnel from GVA0001 -> RIO0001
  tunnel vrf v1
  tunnel source loopback0
- tunnel destination 20.20.20.1
- tunnel domain-name 20.20.20.3 20.20.20.4
+ tunnel destination 20.20.20.11
+ tunnel domain-name 20.20.20.2 20.20.20.1
  tunnel mode polka
  vrf forwarding v1
  ipv4 address 30.30.30.2 255.255.255.252
@@ -165,16 +165,16 @@ interface tunnel1
 ```
 
 ``` console
-FRA0001#show interfaces summary | include tunnel1
+GVA0001#show interfaces summary | include tunnel1
 ```
 
 ```
 tunnel1    up     0      0      0
 ```
 
-4. Connectivity test tunnel polka between AMS0001 to FRA0001
+4. Connectivity test tunnel polka between RIO0001 to GVA0001
 ``` console
-AMS0001#ping 30.30.30.2 /vrf v1
+RIO0001#ping 30.30.30.2 /vrf v1
 ```
 ``` 
 pinging 30.30.30.2, src=null, vrf=v1, cnt=5, len=64, tim=1000, gap=0, ttl=255, tos=0, flow=0, fill=0, sweep=false, multi=false, detail=false
@@ -182,9 +182,9 @@ pinging 30.30.30.2, src=null, vrf=v1, cnt=5, len=64, tim=1000, gap=0, ttl=255, t
 result=100%, recv/sent/lost/err=5/5/0/0, rtt min/avg/max/total=1/1/2/7
 ```
 
-4. Connectivity test tunnel polka between  FRA0001 to AMS0001
+4. Connectivity test tunnel polka between  GVA0001 to RIO0001
 ``` console
-AMS0001#ping 30.30.30.1 /vrf v1
+GVA0001#ping 30.30.30.1 /vrf v1
 ```
 ```
 pinging 30.30.30.1, src=null, vrf=v1, cnt=5, len=64, tim=1000, gap=0, ttl=255, tos=0, flow=0, fill=0, sweep=false, multi=false, detail=false
