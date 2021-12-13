@@ -287,6 +287,8 @@ and
 RIO0001#display interfaces traffic
 AMS0001#display interfaces traffic
 FRA0001#display interfaces traffic
+BUD0001#display interfaces traffic
+POZ0001#display interfaces traffic
 GVA0001#display interfaces traffic
 ```
 
@@ -320,7 +322,43 @@ GVA0001#write
 GVA0001#reload warm
 ```
 
+Router RIO0001
+```
+RIO0001#show running-config | section tunnel1
+```
+note below the modification of the path at the source on router RIO.
 
+![Screen Shot 2021-12-13 at 19 43 10](https://user-images.githubusercontent.com/56919528/145900748-5edfac6d-7f1a-4f6a-bd26-9aa020e0932b.png)
+
+Router GVA0001
+```
+GVA0001#show running-config | section tunnel1
+```
+
+note below the modification of the path at the source on router GVA0001.
+
+![Screen Shot 2021-12-13 at 19 44 33](https://user-images.githubusercontent.com/56919528/145900896-b4214244-a22b-4aa6-b35a-f3f594e2f4a0.png)
+
+
+I used the following commands to debug the path.
+
+```console
+RIO0001#ping 30.30.30.2 /vrf v1 /size 1111 /repeat 111111
+```
+and 
+```console
+RIO0001#display interfaces traffic
+AMS0001#display interfaces traffic
+FRA0001#display interfaces traffic
+BUD0001#display interfaces traffic
+POZ0001#display interfaces traffic
+GVA0001#display interfaces traffic
+```
+
+going - RIO0001 -> AMS0001 -> POZ0001 -> BUD0001 -> FRA0001 -> GVA0001 - echo request
+back - GVA0001 -> FRA0001 -> BUD0001 -> POZ0001 -> AMS0001 -> RIO0001 - echo replay
+
+In this screenshot we can see the debug in the longest path of the packages
 
 
 
