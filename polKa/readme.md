@@ -253,7 +253,8 @@ result=100%, recv/sent/lost/err=5/5/0/0, rtt min/avg/max/total=1/1/2/7
 ```
 8. Now we are going to debug the longest path and the shortest path as shown in the screenshot.
  
- ![rare-topology-Edge-Core Topology drawio (1)](https://user-images.githubusercontent.com/56919528/145881920-df485b94-a989-4140-a591-cd3d17ac26dd.png)
+![rare-topology-Tunnel](https://user-images.githubusercontent.com/56919528/145882530-2bb1b5a6-38e5-442f-b6d0-8b90e4e0b4cb.png)
+
 
 9. Shosrtest Path
 
