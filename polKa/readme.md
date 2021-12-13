@@ -260,9 +260,11 @@ result=100%, recv/sent/lost/err=5/5/0/0, rtt min/avg/max/total=1/1/2/7
 In the initial setup, we had already enabled the shortest path. Below you can see the debug of this configuration.
 
 Router RIO0001
+
 ![Screen Shot 2021-12-13 at 19 09 13](https://user-images.githubusercontent.com/56919528/145897059-d2f029ba-1bed-427f-8461-7e75bf89dc9a.png)
 
 Router GVA0001
+
 ![Screen Shot 2021-12-13 at 19 09 46](https://user-images.githubusercontent.com/56919528/145897117-0fb7820d-6b42-42c7-8106-a19975159b30.png)
 
 
