@@ -27,10 +27,7 @@ This article exposes how to install freerouter and execute a core topology with 
   ```
   http://archive.ubuntu.com/ubuntu/dists/bionic/main/installer-amd64/current/images/netboot/mini.iso
   ```
-  - Install freeRouter
-  ``` console
-  wget freertr.net/install.sh ; sudo bash install.sh
-  ```
+
 Or download our image:
   - In our example we will use the Ubuntu 20.04 installed as a VirtualBox VM:
 
