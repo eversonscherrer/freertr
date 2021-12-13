@@ -276,6 +276,7 @@ GVA0001#show running-config | section tunnel1
 In this screenshot we can see the debug in the shortest path of the packages
 
 going  - RIO0001 -> AMS0001 -> FRA0001 -> GVA0001 - echo request
+
 back - GVA0001 -> FRA0001 -> AMS0001 -> RIO0001 - echo replay
 
 I used the following commands to debug the path.
@@ -337,7 +338,7 @@ GVA0001#show running-config | section tunnel1
 
 note below the modification of the path at the source on router GVA0001.
 
-![Screen Shot 2021-12-13 at 19 44 33](https://user-images.githubusercontent.com/56919528/145900896-b4214244-a22b-4aa6-b35a-f3f594e2f4a0.png)
+![Screen Shot 2021-12-13 at 19 55 34](https://user-images.githubusercontent.com/56919528/145902171-2a91886c-f632-447b-ad5c-d6fbb65f2e54.png)
 
 
 I used the following commands to debug the path.
@@ -360,6 +361,7 @@ back - GVA0001 -> FRA0001 -> BUD0001 -> POZ0001 -> AMS0001 -> RIO0001 - echo rep
 
 In this screenshot we can see the debug in the longest path of the packages
 
+![Screen Shot 2021-12-13 at 19 57 26](https://user-images.githubusercontent.com/56919528/145902337-d0a1beb7-c378-4ce3-a1b3-87fcf43d9aab.png)
 
 
 # Conclusion
