@@ -256,7 +256,7 @@ result=100%, recv/sent/lost/err=5/5/0/0, rtt min/avg/max/total=1/1/2/7
 ![rare-topology-Tunnel](https://user-images.githubusercontent.com/56919528/145882530-2bb1b5a6-38e5-442f-b6d0-8b90e4e0b4cb.png)
 
 
-9. Shosrtest Path
+9. Shortest Path (In the initial setup, we had already enabled the shortest path. Below you can see the debug of this configuration.)
 
 
 11. Longest Path
