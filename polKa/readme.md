@@ -274,6 +274,7 @@ GVA0001#show running-config | section tunnel1
 ![Screen Shot 2021-12-13 at 19 09 46](https://user-images.githubusercontent.com/56919528/145897117-0fb7820d-6b42-42c7-8106-a19975159b30.png)
 
 In this screenshot we can see the debug in the shortest path of the packages
+
 going  - RIO0001 -> AMS0001 -> FRA0001 -> GVA0001 - echo request
 back - GVA0001 -> FRA0001 -> AMS0001 -> RIO0001 - echo replay
 
@@ -295,6 +296,31 @@ Note in this screenshot that only the shortest path routers have traffic.
 
 
 11. Longest Path
+To use the longest path we will have to reconfigure the domain name of the tunnel.
+
+Router RIO0001
+
+```console
+RIO0001#configure terminal
+RIO0001(cfg)#interface tunnel1
+RIO0001(cfg-if)#tunnel domain-name 20.20.20.1 20.20.20.4 20.20.20.3 20.20.20.2
+RIO0001(cfg-if)#end
+RIO0001#write
+RIO0001#reload warm
+```
+
+Router GVA0001
+
+```console
+GVA0001#configure terminal
+GVA0001(cfg)#interface tunnel1
+GVA0001(cfg-if)#tunnel domain-name 20.20.20.2 20.20.20.3 20.20.20.4 20.20.20.1
+GVA0001(cfg-if)#end
+GVA0001#write
+GVA0001#reload warm
+```
+
+
 
 
 
