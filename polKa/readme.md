@@ -242,7 +242,7 @@ pinging 30.30.30.2, src=null, vrf=v1, cnt=5, len=64, tim=1000, gap=0, ttl=255, t
 result=100%, recv/sent/lost/err=5/5/0/0, rtt min/avg/max/total=1/1/2/7
 ```
 
-4. Connectivity test tunnel polka between  GVA0001 to RIO0001
+7. Connectivity test tunnel polka between  GVA0001 to RIO0001
 ``` console
 GVA0001#ping 30.30.30.1 /vrf v1
 ```
@@ -251,6 +251,15 @@ pinging 30.30.30.1, src=null, vrf=v1, cnt=5, len=64, tim=1000, gap=0, ttl=255, t
 !!!!!
 result=100%, recv/sent/lost/err=5/5/0/0, rtt min/avg/max/total=1/1/2/7
 ```
+8. Now we are going to debug the longest path and the shortest path as shown in the screenshot.
+ 
+ ![rare-topology-Edge-Core Topology drawio (1)](https://user-images.githubusercontent.com/56919528/145881920-df485b94-a989-4140-a591-cd3d17ac26dd.png)
+
+9. Shosrtest Path
+
+
+11. Longest Path
+
 
 
 # Conclusion
