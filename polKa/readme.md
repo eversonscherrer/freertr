@@ -273,6 +273,25 @@ GVA0001#show running-config | section tunnel1
 
 ![Screen Shot 2021-12-13 at 19 09 46](https://user-images.githubusercontent.com/56919528/145897117-0fb7820d-6b42-42c7-8106-a19975159b30.png)
 
+In this screenshot we can see the debug in the shortest path of the packages
+going  - RIO0001 -> AMS0001 -> FRA0001 -> GVA0001 - echo request
+back - GVA0001 -> FRA0001 -> AMS0001 -> RIO0001 - echo replay
+
+I used the following commands to debug the path.
+```console
+RIO0001#ping 30.30.30.2 /vrf v1 /size 1111 /repeat 111111
+```
+and 
+```console
+RIO0001#display interfaces traffic
+AMS0001#display interfaces traffic
+FRA0001#display interfaces traffic
+GVA0001#display interfaces traffic
+```
+
+Note in this screenshot that only the shortest path routers have traffic.
+
+![Screen Shot 2021-12-13 at 19 25 59](https://user-images.githubusercontent.com/56919528/145899115-084f97fd-f954-4de4-90d1-a664c3f8544f.png)
 
 
 11. Longest Path
