@@ -361,7 +361,7 @@ back - GVA0001 -> FRA0001 -> BUD0001 -> POZ0001 -> AMS0001 -> RIO0001 - echo rep
 
 In this screenshot we can see the debug in the longest path of the packages
 
-![Screen Shot 2021-12-13 at 19 57 26](https://user-images.githubusercontent.com/56919528/145902337-d0a1beb7-c378-4ce3-a1b3-87fcf43d9aab.png)
+![Screen Shot 2021-12-13 at 19 59 14](https://user-images.githubusercontent.com/56919528/145902514-22b74983-b326-4114-998b-259f7572e1c2.png)
 
 
 # Conclusion
