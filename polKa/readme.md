@@ -27,7 +27,13 @@ This article exposes how to install freerouter and execute a core topology with 
   ```
   http://archive.ubuntu.com/ubuntu/dists/bionic/main/installer-amd64/current/images/netboot/mini.iso
   ```
-
+ 
+ ```console
+  apt-get install default-jre-headless --no-install-recommends
+  wget http://freerouter.nop.hu/rtr.jar
+  tar xvf rtr.tar -C ~/freertr/
+  ```
+  
 Or download our image:
   - In our example we will use the Ubuntu 20.04 installed as a VirtualBox VM:
 
