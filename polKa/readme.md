@@ -169,7 +169,39 @@ GVA0001#show interfaces summary | include tunnel1
 tunnel1    up     0      0      0
 ```
 
-4. Connectivity test tunnel polka between RIO0001 to GVA0001
+4. Show polka polynomial table
+```console
+RIO0001#show polka routeid tunnel1
+```
+```
+mode  routeid
+hex   00 00 00 00 00 00 41 3b fd 39 6d 38 a0 07 71 39
+poly  1000001001110111111110100111001011011010011100010100000000001110111000100111001
+
+index  coeff     poly   crc    equal
+0      00010000  28985  28985  true
+1      00010001  4      4      true
+2      00010003  7      7      true
+3      00010005  2      2      true
+4      00010009  3      3      true
+5      0001000f  61482  61482  true
+6      00010011  60173  60173  true
+7      0001001b  0      0      true
+8      0001001d  59032  59032  true
+9      0001002b  2564   2564   true
+10     0001002d  23723  23723  true
+11     00010039  44005  44005  true
+12     0001003f  60401  60401  true
+13     00010047  23239  23239  true
+14     0001004b  45928  45928  true
+15     00010053  48139  48139  true
+16     00010059  60634  60634  true
+17     00010063  51307  51307  true
+18     00010065  15510  15510  true
+19     0001006f  52396  52396  true
+```
+
+6. Connectivity test tunnel polka between RIO0001 to GVA0001
 ``` console
 RIO0001#ping 30.30.30.2 /vrf v1
 ```
