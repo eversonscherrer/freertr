@@ -269,7 +269,7 @@ RIO0001#show running-config | section tunnel1
 Router GVA0001
 ```
 GVA0001#show running-config | section tunnel1
-
+```
 
 ![Screen Shot 2021-12-13 at 19 09 46](https://user-images.githubusercontent.com/56919528/145897117-0fb7820d-6b42-42c7-8106-a19975159b30.png)
 
