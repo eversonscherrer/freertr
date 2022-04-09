@@ -8,7 +8,7 @@ vrf definition v1
 !
 router ospf4 1
  vrf v1
- router-id 10.7.7.7
+ router-id 10.6.6.6
  segrout 10
  area 0 enable
  area 0 segrout
@@ -17,7 +17,7 @@ router ospf4 1
 !
 router ospf6 1
  vrf v1
- router-id 10.6.7.7
+ router-id 10.66.6.6
  segrout 10
  area 0 enable
  area 0 segrout
@@ -37,8 +37,8 @@ interface template1
 interface loopback0
  description lo R6
  vrf forwarding v1
- ipv4 address 20.20.20.7 /32
- ipv6 address 2020::7 /128
+ ipv4 address 20.20.20.6 /32
+ ipv6 address 2020::6 /128
  template template1
  router ospf4 1 enable
  router ospf4 1 area 0
@@ -54,8 +54,8 @@ interface loopback0
 interface ethernet1
  description R6 -> R2
  vrf forwarding v1
- ipv4 address 7.7.7.1 /30
- ipv6 address 7777::1 /64
+ ipv4 address 6.6.6.1 /30
+ ipv6 address 6666::1 /64
  template template1
  router ospf4 1 enable
  router ospf4 1 area 0
@@ -68,8 +68,7 @@ interface tunnel1
  no description
  tunnel vrf v1
  tunnel source loopback0
- tunnel destination 20.20.20.11
- tunnel domain-name 20.20.20.2 20.20.20.3 20.20.20.4 20.20.20.1
+ tunnel destination 20.20.20.5
  tunnel mode sreth
  vrf forwarding v1
  ipv4 address 30.30.30.2 255.255.255.252
