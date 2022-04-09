@@ -67,8 +67,8 @@ interface ethernet1
 interface ethernet2
  description R2 --> R3
  vrf forwarding v1
- ipv4 address 6.6.6.1 /30
- ipv6 address 6666::1 /64
+ ipv4 address 4.4.4.1 /30
+ ipv6 address 4444::1 /64
  template template1
  router ospf4 1 enable
  router ospf4 1 area 0
