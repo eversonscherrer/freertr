@@ -19,6 +19,8 @@ This article exposes how to install freerouter and execute a core topology with 
   - Ubuntu 18.04 (Bionic beaver)
   - Ubuntu 20.04 (Focal fossa)
 
-# Diagram ![freertr-Segrout](https://user-images.githubusercontent.com/56919528/162589959-f183642a-0914-4fd1-b92c-f966ecb37ca2.png)
+# Diagram
+
+![freertr-Segrout](https://user-images.githubusercontent.com/56919528/162589959-f183642a-0914-4fd1-b92c-f966ecb37ca2.png)
 
 
