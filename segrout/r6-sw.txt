@@ -64,6 +64,18 @@ interface ethernet1
  no shutdown
  exit
 !
+interface tunnel1
+ no description
+ tunnel vrf v1
+ tunnel source loopback0
+ tunnel destination 20.20.20.11
+ tunnel domain-name 20.20.20.2 20.20.20.3 20.20.20.4 20.20.20.1
+ tunnel mode sreth
+ vrf forwarding v1
+ ipv4 address 30.30.30.2 255.255.255.252
+ no shutdown
+ no log-link-change
+ exit
 !
 !
 !
