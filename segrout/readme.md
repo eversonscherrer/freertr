@@ -9,8 +9,6 @@ FreeRouter is a free, open source router control plane software, freeRouter besi
 
 Segment Routing for Source Routing in Network Fabrics.
 
-In order to be able to start a topology with PolKa. 
-
 # Article objective
 This article exposes how to install freerouter and execute a core topology with Segment Routing.
 
