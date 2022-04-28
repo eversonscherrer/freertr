@@ -16,8 +16,8 @@ https://docs.google.com/document/d/1GuLc0Nf7UbP1mGF6mNKsY4QcyhE0VOsNMimCkfo3xaM/
 Paper RARE/Freertr
 https://repositorium.ixtheo.de/xmlui/handle/10900/126092
 
-Demo PolKA
-https://www.youtube.com/watch?v=YAvajCAvF8Q&t=305s
+Docs PolKA
+https://github.com/nerds-ufes/polka/tree/main/freertr
 
 Paper wtestbeds
 https://github.com/eversonscherrer/wtestbeds2022
