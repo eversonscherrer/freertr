@@ -1,4 +1,5 @@
-# Topologies of freertr
+# Topologies of FreerTr
+
 
 Each folder is one topology:
 
@@ -6,4 +7,4 @@ Each folder is one topology:
 
 2 - Square Topology with Segment Route https://github.com/eversonscherrer/freertr/tree/main/segrout
 
-3 - Square Topology with Segment Route https://github.com/eversonscherrer/freertr/tree/main/M-PolKA
+3 - Square Topology with M-PolKA https://github.com/eversonscherrer/freertr/tree/main/M-PolKA
