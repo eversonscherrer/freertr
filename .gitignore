@@ -1,2 +1,7 @@
 /rtr/*
 .DS_Store
+/segrout/ping by loopback.png
+/segrout/ping ipv4.png
+/segrout/show segrout.png
+/segrout/show srindex.png
+/segrout/traceroute.png
