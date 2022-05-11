@@ -71,6 +71,39 @@ sudo chmod +x start-topology.sh
 We used this diagram to describe a M-PolKA demo scenario.
 
 
+# M-PolKA Experimentation
+
+## 1 - To access the router, just access via telnet or ssh, in our demo, we use telnet.
+
+```telnet <localhost> <port>```
+
+For example, Access Router R5, to access another router, just change the port.
+```console
+telnet 127.0.0.1 2525
+```
+
+## 2 - Check running-config for M-PolKA tunnel1.
+
+```console
+show running-config interface tunnel1
+```
+
+````
+R5#show running-config interface tunnel1
+interface tunnel1
+ description M-POLKA tunnel ipv4 from R5 -> R6
+ tunnel vrf v1
+ tunnel source loopback0
+ tunnel destination 20.20.20.6
+ tunnel domain-name 20.20.20.1 20.20.20.2 20.20.20.4 , 20.20.20.2 20.20.20.6 , 20.20.20.3 20.20.20.2 , 20.20.20.4 20.20.20.3 , 20.20.20.6 20.20.20.6
+ tunnel mode mpolka
+ vrf forwarding v1
+ ipv4 address 30.30.30.1 255.255.255.252
+ no shutdown
+ no log-link-change
+ exit
+!
+````
 
 
 
