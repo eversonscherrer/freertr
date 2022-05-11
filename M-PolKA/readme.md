@@ -6,7 +6,7 @@ M-PolKA (Multipath Polynomial Key-based Architecture)is a topology-agnostic mult
 Freertr is a control plane: Router OS process speaks various network protocols, (re)encap packets, and exports forwarding tables to hardware switches. Basically, it is only necessary to install the Java Runtime Environment (JRE). Below is demonstrated how to install it on operating systems: Linux, Windows and macOS.
 
 <p align="center">
-  <img src="https://github.com/eversonscherrer/wpeif2022/blob/main/img/freertr.png">
+  <img src="https://github.com/eversonscherrer/freertr/blob/main/M-PolKA/img/freertr.png">
 </p>
 
 
