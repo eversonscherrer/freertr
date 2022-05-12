@@ -62,6 +62,9 @@ brew install tmux
 ````
 There is a file called ```start-topology.sh``` in the repository. This file orchestrates the execution of all routers in a single run.
 
+Notice
+That file has two environment variables It needs to be defined ```RTR``` and ```HWSW``` these point to the path freertr and router files.  
+
 ```console
 sudo chmod +x start-topology.sh
 ./start-topology.sh

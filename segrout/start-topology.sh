@@ -1,7 +1,7 @@
 #!/bin/bash
 
-RTR=/Users/everson/freertr/rtr/rtr.jar
-HWSW=/Users/everson/freertr/segrout/
+RTR=<freertr path>
+HWSW=<router files path>
 
 tmux new-session -d -s rare 'java -jar '$RTR' routersc '$HWSW'r1-hw.txt '$HWSW'r1-sw.txt'
 tmux split-window -v -t 0 -p 50
