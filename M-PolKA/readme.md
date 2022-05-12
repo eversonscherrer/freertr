@@ -74,7 +74,7 @@ We used this diagram to describe a M-PolKA demo scenario.
 
 # M-PolKA Experimentation
 
-## 1 - To access the router, just access via telnet or ssh, in our demo, we use telnet.
+## To access the router, just access via telnet or ssh, in our demo, we use telnet.
 
 ```telnet <localhost> <port>```
 
