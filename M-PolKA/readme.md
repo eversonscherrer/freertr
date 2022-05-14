@@ -208,7 +208,7 @@ In this article you:
 
 # References
 
-https://ieeexplore.ieee.org/abstract/document/9738811?casa_token=HbWip4ceGoAAAAAA:AylfgsrFoI5GA0N4gLY8RPockgbRwDIvOkIbgxhOMI96R8uYz27qYL7oy-w-a0DKNKOVWMGhmy8
+https://ieeexplore.ieee.org/document/9738811
 
 https://ieeexplore.ieee.org/document/9165501
 
