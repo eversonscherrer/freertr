@@ -183,7 +183,6 @@ result=198%, recv/sent/lost/err=2206/1111/6/0, rtt min/avg/max/sum=0/2/128/14845
 
 # Conclusion
 In this article you:
-- had a showcase on how to implement a fully disaggregated RARE/freeRtr
 - you learned how to set up a M-PolKA environment deployment 
 
 # References
