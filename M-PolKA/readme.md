@@ -73,15 +73,109 @@ sudo chmod +x start-topology.sh
 # M-PolKA Topology
 We used this diagram to describe a M-PolKA demo scenario.
 
-![Topology](https://github.com/eversonscherrer/freertr/blob/main/M-PolKA/img/topology.png)
+![Topology](https://github.com/eversonscherrer/freertr/blob/main/M-PolKA/img/mpolka-topology.png)
 
 # M-PolKA Experimentation
 
-## To access the router, just access via telnet or ssh, in our demo, we use telnet.
+## 1 - To access the router, just access via telnet or ssh, in our demo, we use telnet.
 
 ```telnet <localhost> <port>```
 
 For example, Access Router R5, to access another router, just change the port.
 ```console
 telnet 127.0.0.1 2525
+Trying 127.0.0.1...
+Connected to 127.0.0.1.
+Escape character is '^]'.
+welcome
+line ready
+R5#
 ```
+
+2. Check running-config for tunnel ipv4 M-PolKA in R5.
+
+``` console
+show running-config interface tunnel1
+```
+```
+R5#show running-config interface tunnel1
+interface tunnel1
+ description MPOLKA tunnel ipv4 from R5 -> R6
+ tunnel vrf v1
+ tunnel source loopback0
+ tunnel destination 20.20.20.6
+ tunnel domain-name 20.20.20.1 20.20.20.2 20.20.20.4 , 20.20.20.2 20.20.20.6 , 20.20.20.3 20.20.20.2 , 20.20.20.4 20.20.20.3 , 20.20.20.6 20.20.20.6 ,
+ tunnel mode mpolka
+ vrf forwarding v1
+ ipv4 address 30.30.30.1 255.255.255.252
+ no shutdown
+ no log-link-change
+ exit
+```
+
+3. Check running-config for tunnel ipv6 M-PolKA in R5.
+
+``` console
+show running-config interface tunnel2
+```
+```
+R5#show running-config interface tunnel2
+interface tunnel2
+ description MPOLKA tunnel ipv6 from R5 -> R6
+ tunnel vrf v1
+ tunnel source loopback0
+ tunnel destination 2020::6
+ tunnel domain-name 2020::1 2020::2 2020::4 , 2020::2 2020::6 , 2020::3 2020::2 , 2020::4 2020::3 , 2020::6 2020::6 ,
+ tunnel mode mpolka
+ vrf forwarding v1
+ ipv6 address 3030::1 ffff:ffff:ffff:ffff::
+ no shutdown
+ no log-link-change
+ exit
+```
+
+4. Checking if the tunnels M-PolKA in R5 are up.
+
+``` console
+show interfaces summary | include tunnel1
+```
+
+```
+R5#show interfaces summary | include tunnel
+tunnel1    up     0    0      0
+tunnel2    up     0    0      0
+```
+
+5. Chech M-PolKA polynomial RouteID.
+```console
+show mpolka routeid tunnel1
+```
+R5#show mpolka routeid tunnel1
+iface      hop      routeid
+ethernet1  5.5.5.2  00 00 00 00 00 00 04 15 2a 7c a6 d8 ba 68 32 df
+
+index  coeff     poly   crc    equal
+0      00010000  13023  13023  true
+1      00010001  6      6      true
+2      00010003  8      8      true
+3      00010005  2      2      true
+4      00010009  4      4      true
+5      0001000f  56010  56010  true
+6      00010011  1      1      true
+7      0001001b  11283  11283  true
+8      0001001d  61157  61157  true
+9      0001002b  22410  22410  true
+```
+
+6. Connectivity test tunnel M-PolKA between R5 to R6
+``` console
+ping 30.30.30.2 /si 1111 /re 1111 /tim 11 /vrf v1 /int lo0 /mul
+```
+
+````
+R5#ping 30.30.30.2 /si 1111 /re 1111 /tim 11 /vrf v1 /int lo0 /mul
+info userReader.cmdEnter:userReader.java:1033 command R5#ping 30.30.30.2 /size 1111 /repeat 1111 /timeout 11 /vrf v1 /interface lo0 /multi  from local:telnet <loop> 23 -> 127.0.0.1 56836
+pinging 30.30.30.2, src=20.20.20.5, vrf=v1, cnt=1111, len=1111, tim=11, gap=0, ttl=255, tos=0, sgt=0, flow=0, fill=0, sweep=false, multi=true, detail=false
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!.!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!.!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!...!!!!!!!!!!!!!!.!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+result=198%, recv/sent/lost/err=2206/1111/6/0, rtt min/avg/max/sum=0/2/128/14845, ttl min/avg/max=255/255/255, tos min/avg/max=0/0/0
+````
