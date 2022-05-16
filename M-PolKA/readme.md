@@ -76,11 +76,13 @@ We used this diagram to describe a M-PolKA demo scenario.
 ![Topology](https://github.com/eversonscherrer/freertr/blob/main/M-PolKA/img/mpolka-topology.png)
 
 Tunnel 1 represents the multipath represented in red in the topology, which is composed by:
+```
        r1------>r4
        |         |
        |         |
        v         v
 r6<----r2<------r3
+```
 
 # M-PolKA Experimentation
 
