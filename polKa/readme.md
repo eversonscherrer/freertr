@@ -240,7 +240,7 @@ index  coeff     poly   crc    equal
 
 6. Connectivity test tunnel polka between RIO0001 to GVA0001
 ``` console
-RIO0001#ping 30.30.30.2 /vrf v1
+RIO0001#ping 30.30.30.2 vrf v1
 ```
 ``` 
 pinging 30.30.30.2, src=null, vrf=v1, cnt=5, len=64, tim=1000, gap=0, ttl=255, tos=0, flow=0, fill=0, sweep=false, multi=false, detail=false
@@ -250,7 +250,7 @@ result=100%, recv/sent/lost/err=5/5/0/0, rtt min/avg/max/total=1/1/2/7
 
 7. Connectivity test tunnel polka between  GVA0001 to RIO0001
 ``` console
-GVA0001#ping 30.30.30.1 /vrf v1
+GVA0001#ping 30.30.30.1 vrf v1
 ```
 ```
 pinging 30.30.30.1, src=null, vrf=v1, cnt=5, len=64, tim=1000, gap=0, ttl=255, tos=0, flow=0, fill=0, sweep=false, multi=false, detail=false
@@ -287,7 +287,7 @@ back - GVA0001 -> FRA0001 -> AMS0001 -> RIO0001 - echo replay
 
 I used the following commands to debug the path.
 ```console
-RIO0001#ping 30.30.30.2 /vrf v1 /size 1111 /repeat 111111
+RIO0001#ping 30.30.30.2 vrf v1 size 1111 repeat 111111
 ```
 and 
 ```console
@@ -350,7 +350,7 @@ note below the modification of the path at the source on router GVA0001.
 I used the following commands to debug the path.
 
 ```console
-RIO0001#ping 30.30.30.2 /vrf v1 /size 1111 /repeat 111111
+RIO0001#ping 30.30.30.2 vrf v1 size 1111 repeat 111111
 ```
 and 
 ```console
