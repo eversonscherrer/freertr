@@ -180,7 +180,7 @@ index  coeff     poly   crc    equal
 6. Connectivity test tunnel M-PolKA between R5 to R6
 
 ``` console
-ping 30.30.30.2 /si 1111 /re 1111 /tim 11 /vrf v1 /int lo0 /mul
+ping 30.30.30.2 si 1111 re 1111 tim 11 vrf v1 int lo0 mul
 ```
 
 ```
