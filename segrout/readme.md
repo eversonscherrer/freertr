@@ -73,7 +73,7 @@ index  conn   prefix         peers  bytes
 4. Ping Tunnel Segment Routing Over Ethernet
 
 ```console
-R5#ping 30.30.30.2 /vrf v1
+R5#ping 30.30.30.2 vrf v1
 pinging 30.30.30.2, src=null, vrf=v1, cnt=5, len=64, tim=1000, gap=0, ttl=255, tos=0, sgt=0, flow=0, fill=0, sweep=false, multi=false, detail=false
 !!!!!
 result=100%, recv/sent/lost/err=5/5/0/0, rtt min/avg/max/sum=1/10/36/74, ttl min/avg/max=255/255/255, tos min/avg/max=0/0/0
@@ -82,7 +82,7 @@ result=100%, recv/sent/lost/err=5/5/0/0, rtt min/avg/max/sum=1/10/36/74, ttl min
 5. Traceroute Tunnel Segment Routing Over Ethernet
 
 ```console
-R5#traceroute 30.30.30.2 /vrf v1
+R5#traceroute 30.30.30.2 vrf v1
 tracing 30.30.30.2, src=null, vrf=v1, prt=0/33440, tim=1000, tos=0, flow=0, len=64
 1 30.30.30.1 time=6
 2 30.30.30.2 time=16, mpls=286445
@@ -91,7 +91,7 @@ tracing 30.30.30.2, src=null, vrf=v1, prt=0/33440, tim=1000, tos=0, flow=0, len=
 6. Ping Over loopback interface R6
 
 ```console
-R5#ping 20.20.20.6 /vrf v1 /interface l0
+R5#ping 20.20.20.6 vrf v1 interface l0
 pinging 20.20.20.6, src=20.20.20.5, vrf=v1, cnt=5, len=64, tim=1000, gap=0, ttl=255, tos=0, sgt=0, flow=0, fill=0, sweep=false, multi=false, detail=false
 !!!!!
 result=100%, recv/sent/lost/err=5/5/0/0, rtt min/avg/max/sum=1/3/9/21, ttl min/avg/max=255/255/255, tos min/avg/max=0/0/0
