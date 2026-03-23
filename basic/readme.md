@@ -47,7 +47,7 @@ wget freertr.net/rtr.jar
 
 ### Hardware — Roteador 1
 
-Arquivo de hardware do FreeRouter: `r1-hw.txt`
+Arquivo de hardware do FreeRouter: `1/r1-hw.txt`
 
 ```
 int eth1 eth 0000.1111.0001 127.0.0.1 26011 127.0.0.1 26021
@@ -56,7 +56,7 @@ tcp2vrf 1123 v1 23
 
 ### Software — Roteador 1
 
-Arquivo de configuração de software do FreeRouter: `r1-sw.txt`
+Arquivo de configuração de software do FreeRouter: `1/r1-sw.txt`
 
 ```
 hostname r1
@@ -78,7 +78,7 @@ server telnet tel
 
 ### Hardware — Roteador 2
 
-Arquivo de hardware do FreeRouter: `r2-hw.txt`
+Arquivo de hardware do FreeRouter: `1/r2-hw.txt`
 
 ```
 int eth1 eth 0000.2222.0001 127.0.0.1 26021 127.0.0.1 26011
@@ -87,7 +87,7 @@ tcp2vrf 2223 v1 23
 
 ### Software — Roteador 2
 
-Arquivo de configuração de software do FreeRouter: `r2-sw.txt`
+Arquivo de configuração de software do FreeRouter: `1/r2-sw.txt`
 
 ```
 hostname r2
@@ -130,16 +130,16 @@ java -jar <caminho>/rtr.jar <parâmetros>
 | `show <cmd>` | Executa comando show |
 | `exec <cmd>` | Executa comando exec |
 
-**Inicialização do R1** com os arquivos `r1-hw.txt` e `r1-sw.txt` com prompt de console:
+**Inicialização do R1** com os arquivos `1/r1-hw.txt` e `1/r1-sw.txt` com prompt de console:
 
 ```bash
-java -jar <caminho>/rtr.jar routersc <caminho>/r1-hw.txt <caminho>/r1-sw.txt
+java -jar <caminho>/rtr.jar routersc 1/r1-hw.txt 1/r1-sw.txt
 ```
 
-**Inicialização do R2** com os arquivos `r2-hw.txt` e `r2-sw.txt` com prompt de console:
+**Inicialização do R2** com os arquivos `1/r2-hw.txt` e `1/r2-sw.txt` com prompt de console:
 
 ```bash
-java -jar <caminho>/rtr.jar routersc <caminho>/r2-hw.txt <caminho>/r2-sw.txt
+java -jar <caminho>/rtr.jar routersc 1/r2-hw.txt 1/r2-sw.txt
 ```
 
 **Acesso via Telnet ao R1** (porta 1123):
@@ -202,7 +202,7 @@ r2#ping 1.1.1.1 /vrf v1
 
 ---
 
-## Exercício: Rede Estática com 3 Roteadores
+## Exercício 2: Rede Estática com 3 Roteadores
 
 Implemente uma rede estática com 3 roteadores, utilizando seu número de matrícula e ano de matrícula para definir e atribuir seus próprios endereços IPv4 e IPv6.
 
@@ -236,7 +236,7 @@ r1#ping 1.1.1.2 /vrf v1
 
 ---
 
-## Desafio: Topologia Full Mesh com RIP
+## Desafio 3: Topologia Full Mesh com RIP
 
 Implemente uma topologia full mesh com o protocolo de roteamento dinâmico RIP, seguindo o padrão do exercício anterior.
 
@@ -292,13 +292,13 @@ r1#ping 1.1.1.2 vrf v1
 
 # Variável de ambiente
 RTR=<caminho do freerouter "rtr.jar">
-HWSW=<caminho dos arquivos hardware e software>
+HWSW=<caminho da pasta basic/1>
 
-tmux new-session -d -s rare 'java -jar '$RTR' routersc '$HWSW' r1-hw.txt '$HWSW' r1-sw.txt'
+tmux new-session -d -s rare 'java -jar '$RTR' routersc '$HWSW'/r1-hw.txt '$HWSW'/r1-sw.txt'
 tmux split-window -v -t 0 -p 50
-tmux send 'java -jar '$RTR' routersc '$HWSW' r2-hw.txt '$HWSW' r2-sw.txt' ENTER;
+tmux send 'java -jar '$RTR' routersc '$HWSW'/r2-hw.txt '$HWSW'/r2-sw.txt' ENTER;
 tmux split-window -h -t 0 -p 50
-tmux send 'java -jar '$RTR' routersc '$HWSW' r3-hw.txt '$HWSW' r3-sw.txt' ENTER;
+tmux send 'java -jar '$RTR' routersc '$HWSW'/r3-hw.txt '$HWSW'/r3-sw.txt' ENTER;
 tmux select-layout tiled;
 tmux a;
 ```
