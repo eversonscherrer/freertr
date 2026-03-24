@@ -35,7 +35,7 @@ java -version
 
 ## Instalação do FreeRtr
 
-A página inicial do FreeRouter está em [freertr.net](http://freertr.net). A partir dessa página, você encontrará diversos recursos como código-fonte (existe também um espelho no GitHub), binários e outras imagens que podem ser de seu interesse. Basta baixar os arquivos `.jar` do FreeRouter:
+A página inicial do FreeRouter está em [freertr.org](http://freertr.org). A partir dessa página, você encontrará diversos recursos como código-fonte (existe também um espelho no GitHub), binários e outras imagens que podem ser de seu interesse. Basta baixar os arquivos `.jar` do FreeRouter:
 
 ```bash
 wget freertr.net/rtr.jar
