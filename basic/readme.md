@@ -43,22 +43,6 @@ wget freertr.org/rtr.jar
 
 ---
 
-## Uso da VM no VirtualBox
-
-Se você estiver em um laboratório Windows, pode usar a imagem de disco já preparada em [ubuntu.vdi].
-
-Passos sugeridos:
-
-1. Abra o VirtualBox.
-2. Crie uma nova máquina virtual Linux Ubuntu 64-bit.
-3. Quando chegar na parte do disco, escolha usar um disco existente.
-4. Selecione o arquivo `basic/ubuntu.vdi`.
-5. Inicie a VM.
-6. Dentro da VM, abra este repositório e siga os exercícios normalmente a partir deste `readme.md`.
-
-Se a VM não iniciar corretamente, confira se a máquina foi criada como `Ubuntu (64-bit)` e se há memória RAM suficiente disponível.
-
----
 
 ## Exercício 1: Topologia com 2 Roteadores
 
