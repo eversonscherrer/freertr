@@ -38,10 +38,28 @@ java -version
 A página inicial do FreeRouter está em [freertr.org](http://freertr.org). A partir dessa página, você encontrará diversos recursos como código-fonte (existe também um espelho no GitHub), binários e outras imagens que podem ser de seu interesse. Basta baixar os arquivos `.jar` do FreeRouter:
 
 ```bash
-wget freertr.net/rtr.jar
+wget freertr.org/rtr.jar
 ```
 
 ---
+
+## Uso da VM no VirtualBox
+
+Se você estiver em um laboratório Windows, pode usar a imagem de disco já preparada em [ubuntu.vdi].
+
+Passos sugeridos:
+
+1. Abra o VirtualBox.
+2. Crie uma nova máquina virtual Linux Ubuntu 64-bit.
+3. Quando chegar na parte do disco, escolha usar um disco existente.
+4. Selecione o arquivo `basic/ubuntu.vdi`.
+5. Inicie a VM.
+6. Dentro da VM, abra este repositório e siga os exercícios normalmente a partir deste `readme.md`.
+
+Se a VM não iniciar corretamente, confira se a máquina foi criada como `Ubuntu (64-bit)` e se há memória RAM suficiente disponível.
+
+---
+
 ## Exercício 1: Topologia com 2 Roteadores
 
 Diagrama visual da topologia usada neste exercício:
@@ -207,8 +225,8 @@ r2#sh int
 ## Teste de Conectividade entre R1 e R2
 
 ```
-r1#ping 1.1.1.2 /vrf v1
-r2#ping 1.1.1.1 /vrf v1
+r1#ping 1.1.1.2 vrf v1
+r2#ping 1.1.1.1 vrf v1
 ```
 
 ---
@@ -242,7 +260,7 @@ router#sh ipv6 route v1
 router#sh int
 router#ping
 router#traceroute
-r1#ping 1.1.1.2 /vrf v1
+r1#ping 1.1.1.2 vrf v1
 ```
 
 ---
