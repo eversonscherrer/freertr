@@ -42,6 +42,17 @@ wget freertr.net/rtr.jar
 ```
 
 ---
+## Exercício 1: Topologia com 2 Roteadores
+
+Diagrama visual da topologia usada neste exercício:
+
+```mermaid
+flowchart LR
+    R1["Roteador R1<br/>Interface: ethernet1 (e1)<br/>IPv4: 1.1.1.1/30<br/>IPv6: 1234::1"]
+    R2["Roteador R2<br/>Interface: ethernet1 (e1)<br/>IPv4: 1.1.1.2/30<br/>IPv6: 1234::2"]
+
+    R1 ---|"link direto e1 <-> e1"| R2
+```
 
 ## Configuração dos Roteadores
 
