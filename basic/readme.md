@@ -133,7 +133,7 @@ java -jar <caminho>/rtr.jar <parâmetros>
 **Inicialização do R1** com os arquivos `1/r1-hw.txt` e `1/r1-sw.txt` com prompt de console:
 
 ```bash
-java -jar <caminho>/rtr.jar routersc 1/r1-hw.txt 1/r1-sw.txt
+java -jar <caminho>rtr/rtr.jar routersc 1/r1-hw.txt 1/r1-sw.txt
 ```
 
 **Inicialização do R2** com os arquivos `1/r2-hw.txt` e `1/r2-sw.txt` com prompt de console:
