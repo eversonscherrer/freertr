@@ -1,6 +1,6 @@
 # Tutorial Básico do FreeRtR
 
-O FreeRtR é um plano de controle: o processo do Sistema Operacional do Roteador fala diversos protocolos de rede, reencapsula pacotes e exporta tabelas de encaminhamento para switches de hardware. Basicamente, é necessário apenas instalar o Java Runtime Environment (JRE). Abaixo está demonstrado como instalá-lo nos sistemas operacionais: Linux, Windows e macOS.
+O FreeRtR é um plano de controle: o processo do Sistema Operacional do Roteador fala diversos protocolos de rede, reencapsula pacotes e exporta tabelas de encaminhamento para switches de hardware. Basicamente, é necessário apenas instalar o Java Runtime Environment (JRE). Abaixo está demonstrado como instalá-lo no sistema operacional Linux.
 
 ---
 
@@ -12,23 +12,6 @@ Para fins de demonstração, foi escolhida a instalação no Linux baseado em De
 
 ```bash
 sudo apt install default-jre-headless --no-install-recommends
-```
-
-### Windows
-
-Para instalar a versão Windows do Java, é necessário acessar o site oficial do Java e baixar o executável para Windows. Após o download, verifique se o seu usuário tem permissão de instalação e realize a instalação pelo ambiente gráfico.
-
-### macOS
-
-Existem várias opções para instalar o Java no macOS. Aqui escolhemos instalar em modo texto:
-
-```bash
-curl -s "https://get.sdkman.io" | bash
-source "$HOME/.sdkman/bin/sdkman-init.sh"
-sdk list java
-sdk install java 17.0.2-open
-sdk default java 17.0.2-open
-java -version
 ```
 
 ---
