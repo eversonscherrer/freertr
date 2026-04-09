@@ -1,6 +1,6 @@
-# Tutorial Básico do FreeRouter
+# Tutorial Básico do FreeRtR
 
-O FreeRouter é um plano de controle: o processo do Sistema Operacional do Roteador fala diversos protocolos de rede, reencapsula pacotes e exporta tabelas de encaminhamento para switches de hardware. Basicamente, é necessário apenas instalar o Java Runtime Environment (JRE). Abaixo está demonstrado como instalá-lo nos sistemas operacionais: Linux, Windows e macOS.
+O FreeRtR é um plano de controle: o processo do Sistema Operacional do Roteador fala diversos protocolos de rede, reencapsula pacotes e exporta tabelas de encaminhamento para switches de hardware. Basicamente, é necessário apenas instalar o Java Runtime Environment (JRE). Abaixo está demonstrado como instalá-lo nos sistemas operacionais: Linux, Windows e macOS.
 
 ---
 
@@ -35,7 +35,7 @@ java -version
 
 ## Instalação do FreeRtr
 
-A página inicial do FreeRouter está em [freertr.org](http://freertr.org). A partir dessa página, você encontrará diversos recursos como código-fonte (existe também um espelho no GitHub), binários e outras imagens que podem ser de seu interesse. Basta baixar os arquivos `.jar` do FreeRouter:
+A página inicial do FreeRtR está em [freertr.org](http://freertr.org). A partir dessa página, você encontrará diversos recursos como código-fonte (existe também um espelho no GitHub), binários e outras imagens que podem ser de seu interesse. Basta baixar os arquivos `.jar` do FreeRtR:
 
 ```bash
 wget freertr.org/rtr.jar
@@ -60,7 +60,7 @@ flowchart LR
 
 ### Hardware — Roteador 1
 
-Arquivo de hardware do FreeRouter: `1/r1-hw.txt`
+Arquivo de hardware do FreeRtR: `1/r1-hw.txt`
 
 ```
 int eth1 eth 0000.1111.0001 127.0.0.1 26011 127.0.0.1 26021
@@ -69,7 +69,7 @@ tcp2vrf 1123 v1 23
 
 ### Software — Roteador 1
 
-Arquivo de configuração de software do FreeRouter: `1/r1-sw.txt`
+Arquivo de configuração de software do FreeRtR: `1/r1-sw.txt`
 
 ```
 hostname r1
@@ -91,7 +91,7 @@ server telnet tel
 
 ### Hardware — Roteador 2
 
-Arquivo de hardware do FreeRouter: `1/r2-hw.txt`
+Arquivo de hardware do FreeRtR: `1/r2-hw.txt`
 
 ```
 int eth1 eth 0000.2222.0001 127.0.0.1 26021 127.0.0.1 26011
@@ -100,7 +100,7 @@ tcp2vrf 2223 v1 23
 
 ### Software — Roteador 2
 
-Arquivo de configuração de software do FreeRouter: `1/r2-sw.txt`
+Arquivo de configuração de software do FreeRtR: `1/r2-sw.txt`
 
 ```
 hostname r2
@@ -304,7 +304,7 @@ r1#ping 1.1.1.2 vrf v1
 # por Everson
 
 # Variável de ambiente
-RTR=<caminho do freerouter "rtr.jar">
+RTR=<caminho do FreeRtR "rtr.jar">
 HWSW=<caminho da pasta basic/1>
 
 tmux new-session -d -s rare 'java -jar '$RTR' routersc '$HWSW'/r1-hw.txt '$HWSW'/r1-sw.txt'
@@ -329,7 +329,7 @@ tmux kill-window -t rare
 
 ## Ferramentas
 
-Baixar o pacote de ferramentas de rede do FreeRouter:
+Baixar o pacote de ferramentas de rede do FreeRtR:
 
 ```bash
 wget http://www.freertr.net/rtr-`uname -m`.tar -O rtr.tar
