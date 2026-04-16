@@ -112,20 +112,6 @@ server telnet tel
 java -jar <caminho>/rtr.jar <parâmetros>
 ```
 
-**Parâmetros disponíveis:**
-
-| Parâmetro | Descrição |
-|---|---|
-| `router <cfg>` | Inicia o roteador em segundo plano |
-| `routerc <cfg>` | Inicia o roteador com console |
-| `routerw <cfg>` | Inicia o roteador com janela |
-| `routercw <cfg>` | Inicia o roteador com console e janela |
-| `routers <hwcfg> <swcfg>` | Inicia o roteador com configurações separadas |
-| `routera <swcfg>` | Inicia o roteador com configuração de software |
-| `test <cmd>` | Executa comando de teste |
-| `show <cmd>` | Executa comando show |
-| `exec <cmd>` | Executa comando exec |
-
 **Inicialização do R1** com os arquivos `1/r1-hw.txt` e `1/r1-sw.txt` com prompt de console:
 
 ```bash
@@ -202,23 +188,332 @@ r2#ping 1.1.1.1 vrf v1
 
 Implemente uma rede estática com 3 roteadores, utilizando seu número de matrícula e ano de matrícula para definir e atribuir seus próprios endereços IPv4 e IPv6.
 
+Neste exercício, a topologia possui dois enlaces ponto a ponto:
+
+- R1 conectado ao R2
+- R2 conectado ao R3
+
+O R2 funciona como roteador intermediário entre as duas redes. Por isso, R1 e R3 precisam de rotas estáticas para alcançar a rede que está do outro lado do R2.
+
+Diagrama visual da topologia usada neste exercício:
+
+```mermaid
+flowchart LR
+    R1["Roteador R1<br/>Interface: ethernet1 (e1)<br/>IPv4: 45.26.1.1/30<br/>IPv6: 2026:45:12::1"]
+    R2["Roteador R2<br/>Interface: ethernet1 (e1)<br/>IPv4: 45.26.1.2/30<br/>IPv6: 2026:45:12::2<br/><br/>Interface: ethernet2 (e2)<br/>IPv4: 45.26.1.5/30<br/>IPv6: 2026:45:23::1"]
+    R3["Roteador R3<br/>Interface: ethernet1 (e1)<br/>IPv4: 45.26.1.6/30<br/>IPv6: 2026:45:23::2"]
+
+    R1 ---|"link direto e1 <-> e1"| R2
+    R2 ---|"link direto e2 <-> e1"| R3
+```
+
 **Exemplo:**
 
 - Número de matrícula = 45
 - Ano = 2026
-- Endereço IPv4: `45.21.1.1 255.255.255.252`
+- Endereço IPv4: `45.26.1.1 255.255.255.252`
 - Endereço IPv6: `2026:45::1 ffff:ffff:ffff:ffff::`
 
-### Comandos importantes de configuração
+> Observação: neste exemplo, o IPv4 usa `45` como primeiro octeto por causa da matrícula e `26` como segundo octeto por causa dos dois últimos dígitos do ano. Se sua matrícula ou ano forem diferentes, substitua esses valores mantendo a mesma lógica.
+
+Nos endereços IPv6, `2026:45` identifica o ano e a matrícula. Os blocos `12` e `23` foram usados apenas para separar visualmente os enlaces R1-R2 e R2-R3.
+
+## Plano de Endereçamento
+
+| Enlace | Roteador | Interface | IPv4 | Máscara IPv4 | IPv6 | Máscara IPv6 |
+| --- | --- | --- | --- | --- | --- | --- |
+| R1-R2 | R1 | ethernet1 | `45.26.1.1` | `255.255.255.252` | `2026:45:12::1` | `ffff:ffff:ffff:ffff::` |
+| R1-R2 | R2 | ethernet1 | `45.26.1.2` | `255.255.255.252` | `2026:45:12::2` | `ffff:ffff:ffff:ffff::` |
+| R2-R3 | R2 | ethernet2 | `45.26.1.5` | `255.255.255.252` | `2026:45:23::1` | `ffff:ffff:ffff:ffff::` |
+| R2-R3 | R3 | ethernet1 | `45.26.1.6` | `255.255.255.252` | `2026:45:23::2` | `ffff:ffff:ffff:ffff::` |
+
+Redes usadas:
+
+| Enlace | Rede IPv4 | Rede IPv6 |
+| --- | --- | --- |
+| R1-R2 | `45.26.1.0/30` | `2026:45:12::/64` |
+| R2-R3 | `45.26.1.4/30` | `2026:45:23::/64` |
+
+## Configuração dos Roteadores
+
+### Hardware — Roteador 1
+
+Arquivo de hardware do FreeRtR: `2/r1-hw.txt`
+
+```
+int eth1 eth 0000.1111.0001 127.0.0.1 26011 127.0.0.1 26021
+tcp2vrf 1123 v1 23
+```
+
+### Software — Roteador 1
+
+Arquivo de configuração de software do FreeRtR: `2/r1-sw.txt`
+
+```
+hostname r1
+!
+vrf definition v1
+ exit
+!
+int eth1
+ exit
+!
+server telnet tel
+ security protocol telnet
+ no exec authorization
+ no login authentication
+ vrf v1
+ exit
+!
+```
+
+### Hardware — Roteador 2
+
+Arquivo de hardware do FreeRtR: `2/r2-hw.txt`
+
+```
+int eth1 eth 0000.2222.0001 127.0.0.1 26021 127.0.0.1 26011
+int eth2 eth 0000.2222.0002 127.0.0.1 26022 127.0.0.1 26031
+tcp2vrf 2223 v1 23
+```
+
+### Software — Roteador 2
+
+Arquivo de configuração de software do FreeRtR: `2/r2-sw.txt`
+
+```
+hostname r2
+!
+vrf definition v1
+ exit
+!
+int eth1
+vrf forwarding v1
+exit
+!
+int eth2
+ exit
+!
+server telnet tel
+ security protocol telnet
+ no exec authorization
+ no login authentication
+ vrf v1
+ exit
+!
+```
+
+### Hardware — Roteador 3
+
+Arquivo de hardware do FreeRtR: `2/r3-hw.txt`
+
+```
+int eth1 eth 0000.3333.0001 127.0.0.1 26031 127.0.0.1 26022
+tcp2vrf 3323 v1 23
+```
+
+### Software — Roteador 3
+
+Arquivo de configuração de software do FreeRtR: `2/r3-sw.txt`
+
+```
+hostname r3
+!
+vrf definition v1
+ exit
+!
+int eth1
+ exit
+!
+server telnet tel
+ security protocol telnet
+ no exec authorization
+ no login authentication
+ vrf v1
+ exit
+!
+```
+
+---
+
+## Inicialização dos Roteadores R1, R2 e R3
+
+```bash
+java -jar <caminho>/rtr.jar <parâmetros>
+```
+
+**Inicialização do R1** com os arquivos `2/r1-hw.txt` e `2/r1-sw.txt` com prompt de console:
+
+```bash
+java -jar <caminho>/rtr.jar routersc 2/r1-hw.txt 2/r1-sw.txt
+```
+
+**Inicialização do R2** com os arquivos `2/r2-hw.txt` e `2/r2-sw.txt` com prompt de console:
+
+```bash
+java -jar <caminho>/rtr.jar routersc 2/r2-hw.txt 2/r2-sw.txt
+```
+
+**Inicialização do R3** com os arquivos `2/r3-hw.txt` e `2/r3-sw.txt` com prompt de console:
+
+```bash
+java -jar <caminho>/rtr.jar routersc 2/r3-hw.txt 2/r3-sw.txt
+```
+
+**Acesso via Telnet ao R1** (porta 1123):
+
+```bash
+telnet localhost 1123
+```
+
+**Acesso via Telnet ao R2** (porta 2223):
+
+```bash
+telnet localhost 2223
+```
+
+**Acesso via Telnet ao R3** (porta 3323):
+
+```bash
+telnet localhost 3323
+```
+
+---
+
+## Configuração de Endereçamento IP em Execução do R1, R2 e R3
+
+**Roteador R1:**
+
+```
+r1#conf t
+r1(cfg)#hostname r1
+r1(cfg)#int ethernet1
+r1(cfg-if)#vrf forwarding v1
+r1(cfg-if)#ipv4 address 45.26.1.1 255.255.255.252
+r1(cfg-if)#ipv6 address 2026:45:12::1 ffff:ffff:ffff:ffff::
+r1(cfg-if)#desc r1@e1 -> r2@e1
+r1(cfg-if)#no shut
+r1(cfg-if)#exit
+r1(cfg)#ipv4 route v1 45.26.1.4 255.255.255.252 45.26.1.2
+r1(cfg)#ipv6 route v1 2026:45:23:: ffff:ffff:ffff:ffff:: 2026:45:12::2
+r1(cfg)#end
+r1#sh run
+r1#sh int
+```
+
+**Roteador R2:**
+
+```
+r2#conf t
+r2(cfg)#hostname r2
+r2(cfg)#int ethernet1
+r2(cfg-if)#vrf forwarding v1
+r2(cfg-if)#ipv4 address 45.26.1.2 255.255.255.252
+r2(cfg-if)#ipv6 address 2026:45:12::2 ffff:ffff:ffff:ffff::
+r2(cfg-if)#desc r2@e1 -> r1@e1
+r2(cfg-if)#no shut
+r2(cfg-if)#exit
+r2(cfg)#int ethernet2
+r2(cfg-if)#vrf forwarding v1
+r2(cfg-if)#ipv4 address 45.26.1.5 255.255.255.252
+r2(cfg-if)#ipv6 address 2026:45:23::1 ffff:ffff:ffff:ffff::
+r2(cfg-if)#desc r2@e2 -> r3@e1
+r2(cfg-if)#no shut
+r2(cfg-if)#end
+r2#sh run
+r2#sh int
+```
+
+**Roteador R3:**
+
+```
+r3#conf t
+r3(cfg)#hostname r3
+r3(cfg)#int ethernet1
+r3(cfg-if)#vrf forwarding v1
+r3(cfg-if)#ipv4 address 45.26.1.6 255.255.255.252
+r3(cfg-if)#ipv6 address 2026:45:23::2 ffff:ffff:ffff:ffff::
+r3(cfg-if)#desc r3@e1 -> r2@e2
+r3(cfg-if)#no shut
+r3(cfg-if)#exit
+r3(cfg)#ipv4 route v1 45.26.1.0 255.255.255.252 45.26.1.5
+r3(cfg)#ipv6 route v1 2026:45:12:: ffff:ffff:ffff:ffff:: 2026:45:23::1
+r3(cfg)#end
+r3#sh run
+r3#sh int
+```
+
+---
+
+## Explicação das Rotas Estáticas
+
+O R1 conhece diretamente apenas a rede do enlace R1-R2:
+
+- IPv4: `45.26.1.0/30`
+- IPv6: `2026:45:12::/64`
+
+Para chegar até a rede R2-R3, o R1 precisa enviar os pacotes para o próximo salto R2:
+
+```bash
+r1(cfg)#ipv4 route v1 45.26.1.4 255.255.255.252 45.26.1.2
+r1(cfg)#ipv6 route v1 2026:45:23:: ffff:ffff:ffff:ffff:: 2026:45:12::2
+```
+
+O R3 conhece diretamente apenas a rede do enlace R2-R3:
+
+- IPv4: `45.26.1.4/30`
+- IPv6: `2026:45:23::/64`
+
+Para chegar até a rede R1-R2, o R3 precisa enviar os pacotes para o próximo salto R2:
+
+```bash
+r3(cfg)#ipv4 route v1 45.26.1.0 255.255.255.252 45.26.1.5
+r3(cfg)#ipv6 route v1 2026:45:12:: ffff:ffff:ffff:ffff:: 2026:45:23::1
+```
+
+O R2 não precisa de rotas estáticas neste exemplo, porque ele está diretamente conectado às duas redes.
+
+---
+
+## Teste de Conectividade entre os 3 Roteadores
+
+Primeiro, teste os enlaces diretamente conectados:
+
+```
+r1#ping 45.26.1.2 vrf v1
+r2#ping 45.26.1.1 vrf v1
+r2#ping 45.26.1.6 vrf v1
+r3#ping 45.26.1.5 vrf v1
+```
+
+Depois, teste a comunicação de ponta a ponta entre R1 e R3:
+
+```
+r1#ping 45.26.1.6 vrf v1
+r3#ping 45.26.1.1 vrf v1
+r1#ping 2026:45:23::2 vrf v1
+r3#ping 2026:45:12::1 vrf v1
+```
+
+Use `traceroute` para confirmar que o caminho passa pelo R2:
+
+```
+r1#traceroute 45.26.1.6 vrf v1
+r3#traceroute 45.26.1.1 vrf v1
+```
+
+---
+
+## Comandos Importantes de Configuração
 
 ```bash
 router(cfg)#ipv4 route v1 <rede destino> <máscara rede destino> <próximo salto>
-router(cfg)#ipv4 route v1 0.0.0.0 0.0.0.0 1.1.1.2
+router(cfg)#ipv4 route v1 45.26.1.4 255.255.255.252 45.26.1.2
 router(cfg)#ipv6 route v1 <rede destino> <máscara rede destino> <próximo salto>
-router(cfg)#ipv6 route v1 :: :: 1234::2
+router(cfg)#ipv6 route v1 2026:45:23:: ffff:ffff:ffff:ffff:: 2026:45:12::2
 ```
 
-### Comandos importantes de troubleshooting
+## Comandos Importantes de Troubleshooting
 
 ```bash
 router#sh run
@@ -227,7 +522,8 @@ router#sh ipv6 route v1
 router#sh int
 router#ping
 router#traceroute
-r1#ping 1.1.1.2 vrf v1
+r1#ping 45.26.1.6 vrf v1
+r3#ping 45.26.1.1 vrf v1
 ```
 
 ---
