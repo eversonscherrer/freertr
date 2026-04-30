@@ -3,7 +3,13 @@
 
 # Variáveis de ambiente.
 # Altere RTR se o rtr.jar estiver em outro caminho.
-RTR=${RTR:-../../rtr/rtr.jar}
+if [ -z "$RTR" ]; then
+  if [ -f "../../rtr.jar" ]; then
+    RTR="../../rtr.jar"
+  else
+    RTR="../../rtr/rtr.jar"
+  fi
+fi
 HWSW=${HWSW:-.}
 SESSION=${SESSION:-rare}
 
@@ -19,6 +25,7 @@ if ! command -v tmux >/dev/null 2>&1; then
 fi
 
 tmux kill-session -t "$SESSION" 2>/dev/null
+sleep 1
 
 tmux new-session -d -s "$SESSION" "java -jar $RTR routersc $HWSW/r1-hw.txt $HWSW/r1-sw.txt"
 tmux split-window -v -t "$SESSION":0 -p 50

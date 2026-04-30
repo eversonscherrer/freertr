@@ -4,10 +4,19 @@ vrf definition v1
  exit
 !
 int eth1
-vrf forwarding v1
-exit
+ vrf forwarding v1
+ ipv4 address 45.26.1.2 255.255.255.252
+ ipv6 address 2026:45:12::2 ffff:ffff:ffff:ffff::
+ desc r2@e1 -> r1@e1
+ no shutdown
+ exit
 !
 int eth2
+ vrf forwarding v1
+ ipv4 address 45.26.1.5 255.255.255.252
+ ipv6 address 2026:45:23::1 ffff:ffff:ffff:ffff::
+ desc r2@e2 -> r3@e1
+ no shutdown
  exit
 !
 server telnet tel
