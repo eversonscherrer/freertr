@@ -652,30 +652,62 @@ tmux kill-session -t rare
 
 ## Desafio 3: Topologia Full Mesh com RIP
 
-O diretório `3/` contém uma topologia full mesh com 3 roteadores usando RIP para IPv4 e IPv6. Este desafio foi montado de forma didática para mostrar a diferença entre:
+O diretório `3/` contém uma topologia full mesh com 3 roteadores usando RIP para IPv4 e IPv6. A ideia é observar, de forma didática, a diferença entre redes diretamente conectadas e redes aprendidas dinamicamente.
 
-- redes diretamente conectadas;
-- redes aprendidas dinamicamente via RIP;
-- loopbacks usadas como destino estável para testes de roteamento.
+Diagrama visual da topologia usada neste desafio:
 
-Material do desafio:
+```mermaid
+flowchart LR
+    R1["R1<br/>lo0: 45.26.100.1/32<br/>2026:45:100::1/128"]
+    R2["R2<br/>lo0: 45.26.100.2/32<br/>2026:45:100::2/128"]
+    R3["R3<br/>lo0: 45.26.100.3/32<br/>2026:45:100::3/128"]
 
-- `3/readme.md`: roteiro didático do laboratório;
+    R1 ---|"e1 <-> e1<br/>45.26.12.0/30<br/>2026:45:12::/64"| R2
+    R2 ---|"e2 <-> e1<br/>45.26.23.0/30<br/>2026:45:23::/64"| R3
+    R1 ---|"e2 <-> e2<br/>45.26.13.0/30<br/>2026:45:13::/64"| R3
+```
+
+Objetivos:
+
+- montar uma topologia full mesh com R1, R2 e R3;
+- configurar endereços IPv4 e IPv6 nos enlaces;
+- criar uma loopback em cada roteador para representar uma rede própria;
+- ativar RIP4 e RIP6 nas interfaces;
+- validar as rotas aprendidas com `show route`, `ping` e `traceroute`.
+
+Arquivos do desafio:
+
 - `3/r1-hw.txt`, `3/r2-hw.txt`, `3/r3-hw.txt`: arquivos de hardware;
 - `3/r1-sw.txt`, `3/r2-sw.txt`, `3/r3-sw.txt`: configurações com RIP4 e RIP6;
 - `3/script.sh`: inicia a topologia no `tmux`;
 - `3/stop.sh`: para a sessão do laboratório.
 
-**Exemplo:**
+### Plano de Endereçamento
 
-- Número de matrícula = 45
-- Ano = 2026
-- Endereço IPv4 de enlace: `45.26.12.1 255.255.255.252`
-- Endereço IPv6 de enlace: `2026:45:12::1 ffff:ffff:ffff:ffff::`
-- Loopback IPv4: `45.26.100.1 255.255.255.255`
-- Loopback IPv6: `2026:45:100::1 ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff`
+| Enlace | Roteador | Interface | IPv4 | IPv6 |
+| --- | --- | --- | --- | --- |
+| R1-R2 | R1 | ethernet1 | `45.26.12.1/30` | `2026:45:12::1/64` |
+| R1-R2 | R2 | ethernet1 | `45.26.12.2/30` | `2026:45:12::2/64` |
+| R2-R3 | R2 | ethernet2 | `45.26.23.1/30` | `2026:45:23::1/64` |
+| R2-R3 | R3 | ethernet1 | `45.26.23.2/30` | `2026:45:23::2/64` |
+| R1-R3 | R1 | ethernet2 | `45.26.13.1/30` | `2026:45:13::1/64` |
+| R1-R3 | R3 | ethernet2 | `45.26.13.2/30` | `2026:45:13::2/64` |
 
-### Como executar
+| Roteador | Loopback IPv4 | Loopback IPv6 |
+| --- | --- | --- |
+| R1 | `45.26.100.1/32` | `2026:45:100::1/128` |
+| R2 | `45.26.100.2/32` | `2026:45:100::2/128` |
+| R3 | `45.26.100.3/32` | `2026:45:100::3/128` |
+
+### Como Executar
+
+Na raiz do repositório, confirme que o `rtr.jar` existe:
+
+```bash
+ls rtr/rtr.jar
+```
+
+Entre no diretório do laboratório e inicie a topologia:
 
 ```bash
 cd basic/3
@@ -697,7 +729,9 @@ cd basic/3
 ./stop.sh
 ```
 
-### Portas de acesso Telnet
+### Acesso por Telnet
+
+Em outro terminal:
 
 ```bash
 telnet localhost 3123
@@ -705,7 +739,7 @@ telnet localhost 3223
 telnet localhost 3423
 ```
 
-### Comandos importantes de configuração
+### Comandos Importantes de Configuração
 
 ```bash
 # Configuração RIP para IPv4
@@ -725,19 +759,96 @@ router(cfg)#int eth1
 router(cfg-if)#router rip6 1 enable
 ```
 
-### Comandos importantes de troubleshooting
+### O Que Observar
 
-```bash
-router#sh run
-router#sh ipv4 route v1
-router#sh ipv6 route v1
-router#sh int
+Comece pelas interfaces e pela tabela de rotas:
+
+```text
+router#show interfaces
+router#show ipv4 route v1
+router#show ipv6 route v1
+```
+
+Em cada roteador, separe mentalmente:
+
+- rotas conectadas: redes das interfaces locais;
+- rotas aprendidas: redes recebidas dos vizinhos via RIP;
+- loopbacks: bons alvos para testar roteamento fim a fim.
+
+### Testes Sugeridos
+
+Do R1 para as loopbacks remotas:
+
+```text
 r1#ping 45.26.100.2 vrf v1
 r1#ping 45.26.100.3 vrf v1
 r1#ping 2026:45:100::2 vrf v1
 r1#ping 2026:45:100::3 vrf v1
+```
+
+Do R2:
+
+```text
+r2#ping 45.26.100.1 vrf v1
+r2#ping 45.26.100.3 vrf v1
+r2#ping 2026:45:100::1 vrf v1
+r2#ping 2026:45:100::3 vrf v1
+```
+
+Do R3:
+
+```text
+r3#ping 45.26.100.1 vrf v1
+r3#ping 45.26.100.2 vrf v1
+r3#ping 2026:45:100::1 vrf v1
+r3#ping 2026:45:100::2 vrf v1
+```
+
+Use `traceroute` para ver o caminho escolhido:
+
+```text
+r1#traceroute 45.26.100.2 vrf v1
+r1#traceroute 45.26.100.3 vrf v1
+r2#traceroute 45.26.100.1 vrf v1
+```
+
+### Experimentos de Aprendizado
+
+Veja as rotas antes de testar ping:
+
+```text
+r1#show ipv4 route v1
+r1#show ipv6 route v1
+```
+
+Desative um enlace e observe a convergência:
+
+```text
+r1#conf t
+r1(cfg)#interface ethernet2
+r1(cfg-if)#shutdown
+r1(cfg-if)#end
+```
+
+Depois, confira se o tráfego ainda chega ao R3 passando por R2:
+
+```text
+r1#ping 45.26.100.3 vrf v1
 r1#traceroute 45.26.100.3 vrf v1
 ```
+
+Reative o enlace:
+
+```text
+r1#conf t
+r1(cfg)#interface ethernet2
+r1(cfg-if)#no shutdown
+r1(cfg-if)#end
+```
+
+### Ideia Principal
+
+Em uma rede full mesh, cada roteador tem dois vizinhos diretos. Mesmo assim, ele não conhece automaticamente as loopbacks dos outros roteadores. O RIP faz esse anúncio dinamicamente, permitindo que cada roteador aprenda as redes que não estão diretamente conectadas a ele.
 
 
 ## Ferramentas
