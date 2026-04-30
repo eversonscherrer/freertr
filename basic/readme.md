@@ -657,14 +657,20 @@ O diretório `3/` contém uma topologia full mesh com 3 roteadores usando RIP pa
 Diagrama visual da topologia usada neste desafio:
 
 ```mermaid
-flowchart LR
+flowchart TB
     R1["R1<br/>lo0: 45.26.100.1/32<br/>2026:45:100::1/128"]
-    R2["R2<br/>lo0: 45.26.100.2/32<br/>2026:45:100::2/128"]
-    R3["R3<br/>lo0: 45.26.100.3/32<br/>2026:45:100::3/128"]
+
+    subgraph base[" "]
+        direction LR
+        R2["R2<br/>lo0: 45.26.100.2/32<br/>2026:45:100::2/128"]
+        R3["R3<br/>lo0: 45.26.100.3/32<br/>2026:45:100::3/128"]
+    end
 
     R1 ---|"e1 <-> e1<br/>45.26.12.0/30<br/>2026:45:12::/64"| R2
-    R2 ---|"e2 <-> e1<br/>45.26.23.0/30<br/>2026:45:23::/64"| R3
     R1 ---|"e2 <-> e2<br/>45.26.13.0/30<br/>2026:45:13::/64"| R3
+    R2 ---|"e2 <-> e1<br/>45.26.23.0/30<br/>2026:45:23::/64"| R3
+
+    style base fill:transparent,stroke:transparent
 ```
 
 Objetivos:
