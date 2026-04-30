@@ -1,6 +1,6 @@
 # Tutorial Básico do FreeRtR
 
-O FreeRtR é um plano de controle: o processo do Sistema Operacional do Roteador fala diversos protocolos de rede, reencapsula pacotes e exporta tabelas de encaminhamento para switches de hardware. Basicamente, é necessário apenas instalar o Java Runtime Environment (JRE). Abaixo está demonstrado como instalá-lo no sistema operacional Linux.
+O FreeRtR é um plano de controle: o processo do Sistema Operacional do Roteador fala diversos protocolos de rede, reencapsula pacotes e exporta tabelas de encaminhamento para switches de hardware. Basicamente, é necessário instalar o Java Runtime Environment (JRE), baixar o `rtr.jar` e executar os arquivos de hardware e software dos roteadores.
 
 ---
 
@@ -8,20 +8,27 @@ O FreeRtR é um plano de controle: o processo do Sistema Operacional do Roteador
 
 ### Linux
 
-Para fins de demonstração, foi escolhida a instalação no Linux baseado em Debian.
+Para fins de demonstração, foi escolhida a instalação no Linux baseado em Debian/Ubuntu.
+
+> O `rtr.jar` atual do FreeRtR exige Java 21. Se a VM tiver Java 11, a inicialização falhará com erro `UnsupportedClassVersionError`.
 
 ```bash
-sudo apt install default-jre-headless --no-install-recommends
+sudo apt update
+sudo apt install openjdk-21-jre-headless tmux telnet --no-install-recommends
+java -version
 ```
 
 ---
 
 ## Instalação do FreeRtr
 
-A página inicial do FreeRtR está em [freertr.org](http://freertr.org). A partir dessa página, você encontrará diversos recursos como código-fonte (existe também um espelho no GitHub), binários e outras imagens que podem ser de seu interesse. Basta baixar os arquivos `.jar` do FreeRtR:
+A página inicial do FreeRtR está em [freertr.org](http://freertr.org). A partir dessa página, você encontrará diversos recursos como código-fonte (existe também um espelho no GitHub), binários e outras imagens que podem ser de seu interesse.
+
+Neste repositório, o caminho usado nos exemplos é `rtr/rtr.jar` a partir da raiz do projeto. A pasta `rtr/` é local e pode ficar fora do controle de versão.
 
 ```bash
-wget freertr.org/rtr.jar
+mkdir -p rtr
+curl -L http://freertr.org/rtr.jar -o rtr/rtr.jar
 ```
 
 ---
@@ -115,7 +122,7 @@ java -jar <caminho>/rtr.jar <parâmetros>
 **Inicialização do R1** com os arquivos `1/r1-hw.txt` e `1/r1-sw.txt` com prompt de console:
 
 ```bash
-java -jar <caminho>rtr/rtr.jar routersc 1/r1-hw.txt 1/r1-sw.txt
+java -jar <caminho>/rtr.jar routersc 1/r1-hw.txt 1/r1-sw.txt
 ```
 
 **Inicialização do R2** com os arquivos `1/r2-hw.txt` e `1/r2-sw.txt` com prompt de console:
@@ -256,7 +263,15 @@ vrf definition v1
  exit
 !
 int eth1
+ vrf forwarding v1
+ ipv4 address 45.26.1.1 255.255.255.252
+ ipv6 address 2026:45:12::1 ffff:ffff:ffff:ffff::
+ desc r1@e1 -> r2@e1
+ no shutdown
  exit
+!
+ipv4 route v1 45.26.1.4 255.255.255.252 45.26.1.2
+ipv6 route v1 2026:45:23:: ffff:ffff:ffff:ffff:: 2026:45:12::2
 !
 server telnet tel
  security protocol telnet
@@ -288,10 +303,19 @@ vrf definition v1
  exit
 !
 int eth1
-vrf forwarding v1
-exit
+ vrf forwarding v1
+ ipv4 address 45.26.1.2 255.255.255.252
+ ipv6 address 2026:45:12::2 ffff:ffff:ffff:ffff::
+ desc r2@e1 -> r1@e1
+ no shutdown
+ exit
 !
 int eth2
+ vrf forwarding v1
+ ipv4 address 45.26.1.5 255.255.255.252
+ ipv6 address 2026:45:23::1 ffff:ffff:ffff:ffff::
+ desc r2@e2 -> r3@e1
+ no shutdown
  exit
 !
 server telnet tel
@@ -323,7 +347,15 @@ vrf definition v1
  exit
 !
 int eth1
+ vrf forwarding v1
+ ipv4 address 45.26.1.6 255.255.255.252
+ ipv6 address 2026:45:23::2 ffff:ffff:ffff:ffff::
+ desc r3@e1 -> r2@e2
+ no shutdown
  exit
+!
+ipv4 route v1 45.26.1.0 255.255.255.252 45.26.1.5
+ipv6 route v1 2026:45:12:: ffff:ffff:ffff:ffff:: 2026:45:23::1
 !
 server telnet tel
  security protocol telnet
@@ -337,6 +369,34 @@ server telnet tel
 ---
 
 ## Inicialização dos Roteadores R1, R2 e R3
+
+O exercício 2 já possui um script para iniciar os três roteadores em uma sessão `tmux`:
+
+```bash
+cd basic/2
+./script.sh
+```
+
+O script procura automaticamente o `rtr.jar` em `../../rtr.jar` ou `../../rtr/rtr.jar`. Se o arquivo estiver em outro caminho, informe a variável `RTR`:
+
+```bash
+cd basic/2
+RTR=/caminho/rtr.jar ./script.sh
+```
+
+Por padrão, a sessão `tmux` se chama `rare`. Para sair do `tmux` sem parar os roteadores, use `Ctrl+b` e depois `d`. Para voltar à sessão:
+
+```bash
+tmux attach -t rare
+```
+
+Para parar o laboratório:
+
+```bash
+tmux kill-session -t rare
+```
+
+Também é possível iniciar cada roteador manualmente em terminais separados:
 
 ```bash
 java -jar <caminho>/rtr.jar <parâmetros>
@@ -381,6 +441,8 @@ telnet localhost 3323
 ---
 
 ## Configuração de Endereçamento IP em Execução do R1, R2 e R3
+
+As configurações abaixo já foram persistidas nos arquivos `2/r1-sw.txt`, `2/r2-sw.txt` e `2/r3-sw.txt`. Elas também podem ser digitadas manualmente no console dos roteadores para fins de prática.
 
 **Roteador R1:**
 
@@ -477,6 +539,8 @@ O R2 não precisa de rotas estáticas neste exemplo, porque ele está diretament
 
 ## Teste de Conectividade entre os 3 Roteadores
 
+Este laboratório foi validado com os arquivos `2/r1-sw.txt`, `2/r2-sw.txt` e `2/r3-sw.txt` completos. Após a primeira tentativa, pode haver perda inicial de pacotes enquanto ARP/ND aprende os vizinhos; ao repetir os testes, os pings devem responder com sucesso.
+
 Primeiro, teste os enlaces diretamente conectados:
 
 ```
@@ -530,46 +594,116 @@ r3#ping 45.26.1.1 vrf v1
 
 ## Scripts de Automação com tmux
 
-### Script para iniciar todos os roteadores
+O exercício 2 possui o arquivo `2/script.sh`. Ele inicia R1, R2 e R3 em uma única janela `tmux`, dividida em três painéis.
 
 ```bash
 #!/bin/bash
 # por Everson
 
-# Variável de ambiente
-RTR=<caminho do FreeRtR "rtr.jar">
-HWSW=<caminho da pasta basic/1>
+# Variáveis de ambiente.
+# Altere RTR se o rtr.jar estiver em outro caminho.
+if [ -z "$RTR" ]; then
+  if [ -f "../../rtr.jar" ]; then
+    RTR="../../rtr.jar"
+  else
+    RTR="../../rtr/rtr.jar"
+  fi
+fi
+HWSW=${HWSW:-.}
+SESSION=${SESSION:-rare}
 
-tmux new-session -d -s rare 'java -jar '$RTR' routersc '$HWSW'/r1-hw.txt '$HWSW'/r1-sw.txt'
-tmux split-window -v -t 0 -p 50
-tmux send 'java -jar '$RTR' routersc '$HWSW'/r2-hw.txt '$HWSW'/r2-sw.txt' ENTER;
-tmux split-window -h -t 0 -p 50
-tmux send 'java -jar '$RTR' routersc '$HWSW'/r3-hw.txt '$HWSW'/r3-sw.txt' ENTER;
-tmux select-layout tiled;
-tmux a;
+if [ ! -f "$RTR" ]; then
+  echo "Arquivo rtr.jar não encontrado: $RTR"
+  echo "Use, por exemplo: RTR=/caminho/rtr.jar ./script.sh"
+  exit 1
+fi
+
+if ! command -v tmux >/dev/null 2>&1; then
+  echo "tmux não encontrado. Instale com: sudo apt install tmux"
+  exit 1
+fi
+
+tmux kill-session -t "$SESSION" 2>/dev/null
+sleep 1
+
+tmux new-session -d -s "$SESSION" "java -jar $RTR routersc $HWSW/r1-hw.txt $HWSW/r1-sw.txt"
+tmux split-window -v -t "$SESSION":0 -p 50
+tmux send-keys -t "$SESSION":0 "java -jar $RTR routersc $HWSW/r2-hw.txt $HWSW/r2-sw.txt" ENTER
+tmux split-window -h -t "$SESSION":0.0 -p 50
+tmux send-keys -t "$SESSION":0 "java -jar $RTR routersc $HWSW/r3-hw.txt $HWSW/r3-sw.txt" ENTER
+tmux select-layout -t "$SESSION" tiled
+tmux attach -t "$SESSION"
 ```
 
-### Script para parar todos os roteadores
+Para usar:
 
 ```bash
-#!/bin/bash
-# por Everson
+cd basic/2
+./script.sh
+```
 
-tmux kill-window -t rare
+Para parar:
+
+```bash
+tmux kill-session -t rare
 ```
 
 ---
 
 ## Desafio 3: Topologia Full Mesh com RIP
 
-Implemente uma topologia full mesh com o protocolo de roteamento dinâmico RIP, seguindo o padrão do exercício anterior.
+O diretório `3/` contém uma topologia full mesh com 3 roteadores usando RIP para IPv4 e IPv6. Este desafio foi montado de forma didática para mostrar a diferença entre:
+
+- redes diretamente conectadas;
+- redes aprendidas dinamicamente via RIP;
+- loopbacks usadas como destino estável para testes de roteamento.
+
+Material do desafio:
+
+- `3/readme.md`: roteiro didático do laboratório;
+- `3/r1-hw.txt`, `3/r2-hw.txt`, `3/r3-hw.txt`: arquivos de hardware;
+- `3/r1-sw.txt`, `3/r2-sw.txt`, `3/r3-sw.txt`: configurações com RIP4 e RIP6;
+- `3/script.sh`: inicia a topologia no `tmux`;
+- `3/stop.sh`: para a sessão do laboratório.
 
 **Exemplo:**
 
 - Número de matrícula = 45
-- Ano = 2021
-- Endereço IPv4: `45.21.1.1 255.255.255.252`
-- Endereço IPv6: `2021:45::1 ffff:ffff:ffff:ffff::`
+- Ano = 2026
+- Endereço IPv4 de enlace: `45.26.12.1 255.255.255.252`
+- Endereço IPv6 de enlace: `2026:45:12::1 ffff:ffff:ffff:ffff::`
+- Loopback IPv4: `45.26.100.1 255.255.255.255`
+- Loopback IPv6: `2026:45:100::1 ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff`
+
+### Como executar
+
+```bash
+cd basic/3
+./script.sh
+```
+
+Para sair do `tmux` sem parar os roteadores, use `Ctrl+b` e depois `d`.
+
+Para voltar:
+
+```bash
+tmux attach -t rip-fullmesh
+```
+
+Para parar:
+
+```bash
+cd basic/3
+./stop.sh
+```
+
+### Portas de acesso Telnet
+
+```bash
+telnet localhost 3123
+telnet localhost 3223
+telnet localhost 3423
+```
 
 ### Comandos importantes de configuração
 
@@ -577,7 +711,7 @@ Implemente uma topologia full mesh com o protocolo de roteamento dinâmico RIP, 
 # Configuração RIP para IPv4
 router(cfg)#router rip4 <id_processo>
 router(cfg-rip)#vrf v1
-router(cfg-rip)#redistributed connect
+router(cfg-rip)#redistribute connected
 
 router(cfg)#int eth1
 router(cfg-if)#router rip4 1 enable
@@ -585,8 +719,7 @@ router(cfg-if)#router rip4 1 enable
 # Configuração RIP para IPv6
 router(cfg)#router rip6 <id_processo>
 router(cfg-rip)#vrf v1
-router(cfg-rip)#redistributed connect
-router(cfg-rip)#net <rede>
+router(cfg-rip)#redistribute connected
 
 router(cfg)#int eth1
 router(cfg-if)#router rip6 1 enable
@@ -595,13 +728,15 @@ router(cfg-if)#router rip6 1 enable
 ### Comandos importantes de troubleshooting
 
 ```bash
-sh run
-sh ipv4 route v1
-sh ipv6 route v1
-sh int
-ping
-traceroute
-r1#ping 1.1.1.2 vrf v1
+router#sh run
+router#sh ipv4 route v1
+router#sh ipv6 route v1
+router#sh int
+r1#ping 45.26.100.2 vrf v1
+r1#ping 45.26.100.3 vrf v1
+r1#ping 2026:45:100::2 vrf v1
+r1#ping 2026:45:100::3 vrf v1
+r1#traceroute 45.26.100.3 vrf v1
 ```
 
 

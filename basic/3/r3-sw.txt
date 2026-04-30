@@ -1,0 +1,52 @@
+hostname r3
+!
+vrf definition v1
+ exit
+!
+router rip4 1
+ vrf v1
+ redistribute connected
+ exit
+!
+router rip6 1
+ vrf v1
+ redistribute connected
+ exit
+!
+int loopback0
+ vrf forwarding v1
+ ipv4 address 45.26.100.3 255.255.255.255
+ ipv6 address 2026:45:100::3 ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff
+ desc loopback didatica do r3
+ router rip4 1 enable
+ router rip6 1 enable
+ no shutdown
+ exit
+!
+int eth1
+ vrf forwarding v1
+ ipv4 address 45.26.23.2 255.255.255.252
+ ipv6 address 2026:45:23::2 ffff:ffff:ffff:ffff::
+ desc r3@e1 -> r2@e2
+ router rip4 1 enable
+ router rip6 1 enable
+ no shutdown
+ exit
+!
+int eth2
+ vrf forwarding v1
+ ipv4 address 45.26.13.2 255.255.255.252
+ ipv6 address 2026:45:13::2 ffff:ffff:ffff:ffff::
+ desc r3@e2 -> r1@e2
+ router rip4 1 enable
+ router rip6 1 enable
+ no shutdown
+ exit
+!
+server telnet tel
+ security protocol telnet
+ no exec authorization
+ no login authentication
+ vrf v1
+ exit
+!
