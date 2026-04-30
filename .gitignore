@@ -1,4 +1,6 @@
 /rtr/*
+/basic/.local/
+/basic/.env
 .DS_Store
 /segrout/ping by loopback.png
 /segrout/ping ipv4.png

@@ -528,6 +528,38 @@ r3#ping 45.26.1.1 vrf v1
 
 ---
 
+## Scripts de Automação com tmux
+
+### Script para iniciar todos os roteadores
+
+```bash
+#!/bin/bash
+# por Everson
+
+# Variável de ambiente
+RTR=<caminho do FreeRtR "rtr.jar">
+HWSW=<caminho da pasta basic/1>
+
+tmux new-session -d -s rare 'java -jar '$RTR' routersc '$HWSW'/r1-hw.txt '$HWSW'/r1-sw.txt'
+tmux split-window -v -t 0 -p 50
+tmux send 'java -jar '$RTR' routersc '$HWSW'/r2-hw.txt '$HWSW'/r2-sw.txt' ENTER;
+tmux split-window -h -t 0 -p 50
+tmux send 'java -jar '$RTR' routersc '$HWSW'/r3-hw.txt '$HWSW'/r3-sw.txt' ENTER;
+tmux select-layout tiled;
+tmux a;
+```
+
+### Script para parar todos os roteadores
+
+```bash
+#!/bin/bash
+# por Everson
+
+tmux kill-window -t rare
+```
+
+---
+
 ## Desafio 3: Topologia Full Mesh com RIP
 
 Implemente uma topologia full mesh com o protocolo de roteamento dinâmico RIP, seguindo o padrão do exercício anterior.
@@ -572,39 +604,6 @@ traceroute
 r1#ping 1.1.1.2 vrf v1
 ```
 
----
-
-## Scripts de Automação com tmux
-
-### Script para iniciar todos os roteadores
-
-```bash
-#!/bin/bash
-# por Everson
-
-# Variável de ambiente
-RTR=<caminho do FreeRtR "rtr.jar">
-HWSW=<caminho da pasta basic/1>
-
-tmux new-session -d -s rare 'java -jar '$RTR' routersc '$HWSW'/r1-hw.txt '$HWSW'/r1-sw.txt'
-tmux split-window -v -t 0 -p 50
-tmux send 'java -jar '$RTR' routersc '$HWSW'/r2-hw.txt '$HWSW'/r2-sw.txt' ENTER;
-tmux split-window -h -t 0 -p 50
-tmux send 'java -jar '$RTR' routersc '$HWSW'/r3-hw.txt '$HWSW'/r3-sw.txt' ENTER;
-tmux select-layout tiled;
-tmux a;
-```
-
-### Script para parar todos os roteadores
-
-```bash
-#!/bin/bash
-# por Everson
-
-tmux kill-window -t rare
-```
-
----
 
 ## Ferramentas
 
